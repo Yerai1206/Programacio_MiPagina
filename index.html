@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Web personal de Yerai Piera Langa, estudiante de 1º DAM en el IES Simarro." />
+  <title>Yerai Piera Langa · 1º DAM</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Shippori+Mincho:wght@500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Fondo: destellos de transformación (detrás del contenido) -->
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <!-- Delante: rayo de clic -->
+  <canvas id="bolt" aria-hidden="true"></canvas>
+
+  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">Claro</button>
+
+  <header class="hero" id="top">
+    <span class="hero__band hero__band--red" aria-hidden="true"></span>
+    <span class="hero__band hero__band--gold" aria-hidden="true"></span>
+    <div class="hero__inner">
+      <p class="hero__eyebrow">進撃 · 1º DAM · IES SIMARRO</p>
+      <h1 class="hero__title">Yerai Piera Langa</h1>
+      <p class="tagline">
+        <span id="typewriter">Quiero dedicarme a la programación. Me apasiona entender cómo funcionan las webs y las aplicaciones, y construir las mías.</span><span class="caret" aria-hidden="true"></span>
+      </p>
+      <span class="seal" aria-hidden="true">悠</span>
+    </div>
+  </header>
+
+  <nav class="nav" aria-label="Secciones">
+    <a href="#sobre-mi">Sobre mí</a>
+    <a href="#camino">Camino</a>
+    <a href="#objetivos">Objetivos</a>
+    <a href="#gusta">Me gusta</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+
+  <main class="site-main">
+    <section id="sobre-mi" class="section">
+      <h2 class="section__title"><span class="section__num">壱</span> Sobre mí</h2>
+      <p class="section__lead">
+        Estudié bachillerato científico y ahora curso <strong>1º de DAM</strong> en el IES Simarro.
+        Voy al gimnasio a diario y algún finde cae un partidito de fútbol.
+      </p>
+      <ul class="facts">
+        <li><span class="facts__k">Formación</span><span class="facts__v">Bachillerato científico → 1º DAM</span></li>
+        <li><span class="facts__k">Disciplina</span><span class="facts__v">Gimnasio + fútbol los findes</span></li>
+        <li><span class="facts__k">Estilo</span><span class="facts__v">Minimalista japonés, contraste y orden</span></li>
+        <li><span class="facts__k">Meta</span><span class="facts__v">Programación web y apps</span></li>
+      </ul>
+    </section>
+
+    <section id="camino" class="section">
+      <h2 class="section__title"><span class="section__num">弐</span> Lo que he hecho</h2>
+      <ol class="timeline">
+        <li class="timeline__item">
+          <span class="timeline__tag">ANTES</span>
+          <h3>Bachillerato científico</h3>
+          <p>Base de lógica, mates y método. Ahí empezó mi curiosidad por cómo funcionan las cosas.</p>
+        </li>
+        <li class="timeline__item">
+          <span class="timeline__tag">AHORA</span>
+          <h3>1º DAM · IES Simarro</h3>
+          <p>Programación, bases de datos y entornos de desarrollo. Construyendo la base del oficio.</p>
+        </li>
+        <li class="timeline__item">
+          <span class="timeline__tag">SIGUIENTE</span>
+          <h3>Web personal + proyectos</h3>
+          <p>Esta web es el primero. Quiero seguir practicando con HTML, CSS y JS puros.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section id="objetivos" class="section">
+      <h2 class="section__title"><span class="section__num">参</span> Objetivos</h2>
+      <div class="cards">
+        <article class="card">
+          <span class="card__kanji">前</span>
+          <h3>Frontend</h3>
+          <p>HTML semántico, CSS a mano y JavaScript. Me fascina la parte que se ve.</p>
+        </article>
+        <article class="card">
+          <span class="card__kanji">後</span>
+          <h3>Backend</h3>
+          <p>Java y lógica de negocio. Quiero entender lo que pasa detrás de cada app.</p>
+        </article>
+        <article class="card">
+          <span class="card__kanji">学</span>
+          <h3>Aprender</h3>
+          <p>Cada día un poco más: código limpio, buenas prácticas y resolver problemas.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="gusta" class="section">
+      <h2 class="section__title"><span class="section__num">肆</span> Me gusta</h2>
+      <ul class="grid">
+        <li class="grid__item"><h3>Música</h3><p>Prácticamente de todos los tipos. Sin género fijo.</p></li>
+        <li class="grid__item"><h3>Ataque a los Titanes</h3><p>Mi serie favorita. Historia, tensión y decisiones imposibles.</p></li>
+        <li class="grid__item"><h3>Videojuegos</h3><p>Rocket League y algún que otro título en mis tiempos libres.</p></li>
+        <li class="grid__item"><h3>Deporte</h3><p>Gimnasio a diario y fútbol los fines de semana.</p></li>
+      </ul>
+    </section>
+
+    <section class="dedication" aria-label="Dedicatoria">
+      <p class="dedication__text">
+        «Siempre me ha llamado la atención cómo funcionan las webs y las apps.
+        Quiero ser yo quien las construya.»
+      </p>
+      <p class="dedication__sign">— Yerai Piera Langa</p>
+    </section>
+  </main>
+
+  <footer id="contacto" class="site-footer">
+    <h2 class="section__title"><span class="section__num">伍</span> Contacto</h2>
+    <address class="contact">
+      <ul class="contact__list">
+        <li><a href="mailto:tu-correo@ejemplo.com">Correo</a></li>
+        <li><a href="https://github.com/tu-usuario" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/tu-usuario" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+      </ul>
+    </address>
+    <p class="foot">© <span id="year"></span> Yerai Piera Langa</p>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
