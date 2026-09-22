@@ -1,134 +1,310 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Web personal de Yerai Piera Langa, estudiante de 1º DAM en el IES Simarro." />
-  <title>Yerai Piera Langa · 1º DAM</title>
-
+  <title>Yerai Piera Langa | Desarrollo web y DAM</title>
+  <meta name="description" content="Portafolio personal de Yerai Piera Langa, estudiante de 1º DAM en el IES Simarro. Interés por desarrollo web, aplicaciones y aprendizaje continuo." />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#f4f1ea" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Shippori+Mincho:wght@500;700&display=swap" rel="stylesheet" />
-
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Shippori+Mincho:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <!-- Fondo: destellos de transformación (detrás del contenido) -->
-  <canvas id="fx" aria-hidden="true"></canvas>
-  <!-- Delante: rayo de clic -->
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
   <canvas id="bolt" aria-hidden="true"></canvas>
 
-  <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">Claro</button>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#inicio">YERAI<span>PIERA</span></a>
 
-  <header class="hero" id="top">
-    <span class="hero__band hero__band--red" aria-hidden="true"></span>
-    <span class="hero__band hero__band--gold" aria-hidden="true"></span>
-    <div class="hero__inner">
-      <p class="hero__eyebrow">進撃 · 1º DAM · IES SIMARRO</p>
-      <h1 class="hero__title">Yerai Piera Langa</h1>
-      <p class="tagline">
-        <span id="typewriter">Quiero dedicarme a la programación. Me apasiona entender cómo funcionan las webs y las aplicaciones, y construir las mías.</span><span class="caret" aria-hidden="true"></span>
-      </p>
-      <span class="seal" aria-hidden="true">悠</span>
+      <nav id="main-nav" class="nav" aria-label="Navegación principal">
+        <a href="#sobre" class="active">Sobre mí</a>
+        <a href="#hecho">Lo que he hecho</a>
+        <a href="#gustos">Me gusta</a>
+        <a href="#futuro">Quiero ser</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Activar tema oscuro">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+        </button>
+
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menú">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </div>
   </header>
 
-  <nav class="nav" aria-label="Secciones">
-    <a href="#sobre-mi">Sobre mí</a>
-    <a href="#camino">Camino</a>
-    <a href="#objetivos">Objetivos</a>
-    <a href="#gusta">Me gusta</a>
-    <a href="#contacto">Contacto</a>
-  </nav>
+  <main id="contenido">
+    <section id="inicio" class="hero">
+      <div class="container hero-grid">
+        <div class="hero__content">
+          <p class="eyebrow">Estudiante de 1º DAM · IES Simarro</p>
+          <h1>Yerai Piera Langa</h1>
+          <p class="hero__motto">Construir aplicaciones que funcionen, se entiendan y tengan criterio.</p>
+          <p class="lead">
+            Me gustaría dedicarme a la programación, ya que siempre me ha llamado mucho la atención el
+            funcionamiento de las páginas web y las aplicaciones. Trabajo con constancia, aprendizaje
+            continuo y una base científica + DAM.
+          </p>
 
-  <main class="site-main">
-    <section id="sobre-mi" class="section">
-      <h2 class="section__title"><span class="section__num">壱</span> Sobre mí</h2>
-      <p class="section__lead">
-        Estudié bachillerato científico y ahora curso <strong>1º de DAM</strong> en el IES Simarro.
-        Voy al gimnasio a diario y algún finde cae un partidito de fútbol.
-      </p>
-      <ul class="facts">
-        <li><span class="facts__k">Formación</span><span class="facts__v">Bachillerato científico → 1º DAM</span></li>
-        <li><span class="facts__k">Disciplina</span><span class="facts__v">Gimnasio + fútbol los findes</span></li>
-        <li><span class="facts__k">Estilo</span><span class="facts__v">Minimalista japonés, contraste y orden</span></li>
-        <li><span class="facts__k">Meta</span><span class="facts__v">Programación web y apps</span></li>
-      </ul>
-    </section>
+          <div class="cta-row">
+            <a class="btn btn--primary" href="#contacto">Contactar</a>
+            <a class="btn" href="#hecho">Ver recorrido</a>
+          </div>
+        </div>
 
-    <section id="camino" class="section">
-      <h2 class="section__title"><span class="section__num">弐</span> Lo que he hecho</h2>
-      <ol class="timeline">
-        <li class="timeline__item">
-          <span class="timeline__tag">ANTES</span>
-          <h3>Bachillerato científico</h3>
-          <p>Base de lógica, mates y método. Ahí empezó mi curiosidad por cómo funcionan las cosas.</p>
-        </li>
-        <li class="timeline__item">
-          <span class="timeline__tag">AHORA</span>
-          <h3>1º DAM · IES Simarro</h3>
-          <p>Programación, bases de datos y entornos de desarrollo. Construyendo la base del oficio.</p>
-        </li>
-        <li class="timeline__item">
-          <span class="timeline__tag">SIGUIENTE</span>
-          <h3>Web personal + proyectos</h3>
-          <p>Esta web es el primero. Quiero seguir practicando con HTML, CSS y JS puros.</p>
-        </li>
-      </ol>
-    </section>
-
-    <section id="objetivos" class="section">
-      <h2 class="section__title"><span class="section__num">参</span> Objetivos</h2>
-      <div class="cards">
-        <article class="card">
-          <span class="card__kanji">前</span>
-          <h3>Frontend</h3>
-          <p>HTML semántico, CSS a mano y JavaScript. Me fascina la parte que se ve.</p>
-        </article>
-        <article class="card">
-          <span class="card__kanji">後</span>
-          <h3>Backend</h3>
-          <p>Java y lógica de negocio. Quiero entender lo que pasa detrás de cada app.</p>
-        </article>
-        <article class="card">
-          <span class="card__kanji">学</span>
-          <h3>Aprender</h3>
-          <p>Cada día un poco más: código limpio, buenas prácticas y resolver problemas.</p>
-        </article>
+        <aside class="focus-card" aria-label="Perfil profesional">
+          <h3>Perfil rápido</h3>
+          <ul class="focus-list">
+            <li><span>Formación</span><strong>Bachillerato científico + 1º DAM</strong></li>
+            <li><span>Centro</span><strong>IES Simarro</strong></li>
+            <li><span>Interés</span><strong>Desarrollo web y aplicaciones</strong></li>
+            <li><span>Método</span><strong>Práctica, orden y mejora continua</strong></li>
+          </ul>
+          <div class="chips">
+            <span class="chip">HTML</span>
+            <span class="chip">CSS</span>
+            <span class="chip">JavaScript</span>
+            <span class="chip">Gimnasio</span>
+            <span class="chip">Fútbol</span>
+          </div>
+        </aside>
       </div>
     </section>
 
-    <section id="gusta" class="section">
-      <h2 class="section__title"><span class="section__num">肆</span> Me gusta</h2>
-      <ul class="grid">
-        <li class="grid__item"><h3>Música</h3><p>Prácticamente de todos los tipos. Sin género fijo.</p></li>
-        <li class="grid__item"><h3>Ataque a los Titanes</h3><p>Mi serie favorita. Historia, tensión y decisiones imposibles.</p></li>
-        <li class="grid__item"><h3>Videojuegos</h3><p>Rocket League y algún que otro título en mis tiempos libres.</p></li>
-        <li class="grid__item"><h3>Deporte</h3><p>Gimnasio a diario y fútbol los fines de semana.</p></li>
-      </ul>
+    <section id="sobre" class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="chapter__label">01 · Sobre mí</span>
+          <h2>Perfil, constancia y criterio</h2>
+          <p class="lead">
+            Combino formación científica, estudios técnicos y disciplina personal. Me interesa entender
+            cómo funcionan las cosas, mejorar con práctica y construir interfaces claras.
+          </p>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <h3>Formación</h3>
+            <p>
+              Bachillerato científico y 1º de DAM. Base lógica, aprendizaje técnico y trabajo orientado
+              a resolución de problemas.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Disciplina</h3>
+            <p>
+              Gimnasio y algún partido de fútbol los fines de semana. Hábitos, constancia y equilibrio
+              para rendir mejor.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Curiosidad técnica</h3>
+            <p>
+              Me atrae el funcionamiento interno de páginas web, aplicaciones, interfaces, lógica y
+              estructura.
+            </p>
+          </article>
+        </div>
+      </div>
     </section>
 
-    <section class="dedication" aria-label="Dedicatoria">
-      <p class="dedication__text">
-        «Siempre me ha llamado la atención cómo funcionan las webs y las apps.
-        Quiero ser yo quien las construya.»
-      </p>
-      <p class="dedication__sign">— Yerai Piera Langa</p>
+    <section id="hecho" class="section section--alt">
+      <div class="container">
+        <div class="section-head">
+          <span class="chapter__label">02 · Lo que he hecho</span>
+          <h2>Recorrido y prácticas</h2>
+          <p class="lead">
+            Un camino orientado a programación, desarrollo web y mejora continua mediante práctica
+            directa.
+          </p>
+        </div>
+
+        <ol class="timeline">
+          <li class="timeline-item">
+            <p class="timeline-date">Bachillerato científico</p>
+            <h3>Base lógica y científica</h3>
+            <p>
+              Formación orientada al razonamiento, análisis, resolución de problemas y comprensión
+              técnica.
+            </p>
+          </li>
+
+          <li class="timeline-item">
+            <p class="timeline-date">1º DAM</p>
+            <h3>Programación y entornos</h3>
+            <p>
+              Inicio del ciclo de Desarrollo de Aplicaciones Multiplataforma, con foco en lógica,
+              interfaces y desarrollo.
+            </p>
+          </li>
+
+          <li class="timeline-item">
+            <p class="timeline-date">Proyectos personales</p>
+            <h3>Práctica con HTML, CSS y JavaScript</h3>
+            <p>
+              Construcción de páginas, ajustes visuales, estructura, accesibilidad básica y control
+              por ficheros separados.
+            </p>
+          </li>
+
+          <li class="timeline-item">
+            <p class="timeline-date">En curso</p>
+            <h3>Mejora de marca y usabilidad</h3>
+            <p>
+              Diseño más profesional, lectura clara, identidad visual, rendimiento y experiencia de
+              usuario.
+            </p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="gustos" class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="chapter__label">03 · Me gusta</span>
+          <h2>Inquietudes, gustos y referentes</h2>
+          <p class="lead">
+            La música, la disciplina, la estrategia y las historias intensas también influyen en mi
+            forma de aprender y trabajar.
+          </p>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <h3>Música</h3>
+            <p>
+              Prácticamente de todos los tipos. Me ayuda a mantener foco, ritmo y constancia.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Ataque a los Titanes</h3>
+            <p>
+              Referente visual y narrativo: tensión, determinación, sacrificio y superación.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Videojuegos</h3>
+            <p>
+              Rocket League y otros títulos donde importan reflejos, decisión, práctica y mejora
+              continua.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Deporte</h3>
+            <p>
+              Gimnasio y algún partido los findes. Equilibrio, energía y disciplina.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="futuro" class="section section--alt">
+      <div class="container">
+        <div class="section-head">
+          <span class="chapter__label">04 · Quiero ser</span>
+          <h2>Objetivo profesional</h2>
+          <p class="lead">
+            Quiero crecer como programador, especialmente en desarrollo web, interfaces, lógica y
+            funcionamiento real de aplicaciones.
+          </p>
+        </div>
+
+        <div class="objective-grid">
+          <div class="objective-card">
+            <h3>Meta</h3>
+            <p>
+              Dedicarme a la programación y seguir aprendiendo con proyectos reales, buenas prácticas
+              y criterio técnico.
+            </p>
+          </div>
+
+          <div class="roadmap">
+            <h3>Ruta</h3>
+            <ul class="roadmap-list">
+              <li>Consolidar HTML, CSS y JavaScript puro.</li>
+              <li>Mejorar accesibilidad, rendimiento y estructura.</li>
+              <li>Aplicar buenas prácticas y código ordenado.</li>
+              <li>Crear proyectos propios y portafolio profesional.</li>
+            </ul>
+          </div>
+        </div>
+
+        <blockquote class="dedication">
+          Me gustaría dedicarme a la programación, ya que siempre me ha llamado mucho la atención el
+          funcionamiento de las páginas web y las aplicaciones.
+        </blockquote>
+      </div>
+    </section>
+
+    <section id="contacto" class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="chapter__label">05 · Contacto</span>
+          <h2>Hablemos de proyectos</h2>
+          <p class="lead">
+            Abierto a prácticas, colaboraciones, feedback y oportunidades de aprendizaje.
+          </p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3>Contacto directo</h3>
+            <p>
+              Puedes escribirme por correo o revisar mis enlaces públicos.
+            </p>
+            <div class="contact-links">
+              <a class="btn btn--primary" href="mailto:tu-correo@ejemplo.com">Email</a>
+              <a class="btn" href="https://github.com/tu-usuario" target="_blank" rel="noopener noreferrer">GitHub</a>
+              <a class="btn" href="https://www.linkedin.com/in/tu-usuario" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <button class="btn" type="button" data-copy-email="tu-correo@ejemplo.com">Copiar email</button>
+            </div>
+          </div>
+
+          <aside class="contact-card contact-card--soft">
+            <h3>Resumen</h3>
+            <ul class="contact-meta">
+              <li><span>Nombre</span><strong>Yerai Piera Langa</strong></li>
+              <li><span>Ciclo</span><strong>1º DAM</strong></li>
+              <li><span>Centro</span><strong>IES Simarro</strong></li>
+              <li><span>Enfoque</span><strong>Desarrollo web</strong></li>
+              <li><span>Estado</span><strong>Aprendiendo y mejorando</strong></li>
+            </ul>
+          </aside>
+        </div>
+      </div>
     </section>
   </main>
 
-  <footer id="contacto" class="site-footer">
-    <h2 class="section__title"><span class="section__num">伍</span> Contacto</h2>
-    <address class="contact">
-      <ul class="contact__list">
-        <li><a href="mailto:tu-correo@ejemplo.com">Correo</a></li>
-        <li><a href="https://github.com/tu-usuario" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-        <li><a href="https://www.linkedin.com/in/tu-usuario" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-      </ul>
-    </address>
-    <p class="foot">© <span id="year"></span> Yerai Piera Langa</p>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Yerai Piera Langa</p>
+      <p class="footer-note">HTML · CSS · JavaScript</p>
+    </div>
   </footer>
 
-  <script src="script.js" defer></script>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
