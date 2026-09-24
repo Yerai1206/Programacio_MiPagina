@@ -10,26 +10,34 @@
   const bestEl = document.getElementById("best");
   const atkText = document.getElementById("atkText");
   const atkFill = document.getElementById("atkFill");
+  const powText = document.getElementById("powText");
+  const powFill = document.getElementById("powFill");
 
   const BEST_KEY = "aot_odm_best";
 
   const CFG = {
-    gravity: 1320,
-    grappleForce: 2700,
-    maxRise: -650,
-    maxFall: 920,
-    baseSpeed: 235,
-    maxSpeed: 430,
-    grappleBoost: 1.32,
+    gravity: 1050,
+    thrustV: 2400,
+    thrustH: 900,
+    baseBoost: 120,
+    maxRise: -620,
+    maxFall: 780,
+    baseSpeed: 200,
+    maxSpeed: 360,
+    speedMin: 100,
+    speedMax: 560,
     ceiling: 58,
+    maxRope: 620,
     attackDuration: 1,
-    attackCooldown: 5,
-    attackRadius: 160,
-    gapMax: 240,
-    gapMin: 158,
-    spawnBase: 440,
-    spawnMin: 305,
-    branchSpacing: 170,
+    attackCooldown: 3,
+    attackRadius: 165,
+    powerDuration: 8,
+    powerCooldown: 1.2,
+    powerThrust: 1.25,
+    gapMax: 245,
+    gapMin: 165,
+    spawnBase: 620,
+    spawnMin: 330,
   };
 
   let W = 0;
@@ -43,8 +51,10 @@
   let score = 0;
   let best = getBest();
   let shake = 0;
+  let speed = CFG.baseSpeed;
 
   const player = { x: 0, y: 0, vy: 0, angle: 0 };
+  const aim = { x: 0, y: 0 };
   const obstacles = [];
   const particles = [];
   const leaves = [];
@@ -53,6 +63,7 @@
   let anchor = null;
   let attackT = 0;
   let cdT = 0;
+  let powerT = 0;
 
   let audioCtx = null;
 
@@ -132,15 +143,12 @@
     if (state !== "playing") {
       player.y = H * 0.45;
     }
+    aim.x = player.x + 130;
+    aim.y = player.y - 130;
   }
 
   function difficulty() {
-    return clamp(dist / 2600, 0, 1);
-  }
-
-  function worldSpeed() {
-    const base = lerp(CFG.baseSpeed, CFG.maxSpeed, difficulty());
-    return held && anchor ? base * CFG.grappleBoost : base;
+    return clamp(dist / 3200, 0, 1);
   }
 
   function reset() {
@@ -154,12 +162,16 @@
     shake = 0;
     attackT = 0;
     cdT = 0;
+    powerT = 0;
     held = false;
     anchor = null;
+    speed = CFG.baseSpeed;
 
     player.y = H * 0.45;
     player.vy = 0;
     player.angle = 0;
+    aim.x = player.x + 130;
+    aim.y = player.y - 130;
 
     obstacles.length = 0;
     particles.length = 0;
@@ -173,6 +185,8 @@
   function gameOver() {
     if (state !== "playing") return;
     state = "over";
+    held = false;
+    anchor = null;
     sound(140, 60, 0.35, 0.25, "sawtooth");
 
     if (score > best) {
@@ -181,7 +195,7 @@
     }
 
     overlayTitle.textContent = "Has caído";
-    overlayText.textContent = `Distancia: ${score} m · Mejor: ${best} m. Mantén el ritmo del cable y ataca solo cuando sea necesario.`;
+    overlayText.textContent = `Distancia: ${score} m · Mejor: ${best} m. Engánchate a los muros para girar y mata titanes para activar el poder.`;
     actionBtn.textContent = "Reintentar";
     overlay.classList.remove("hidden");
   }
@@ -230,33 +244,27 @@
         decay: 1.4 + Math.random(),
         size: 2 + Math.random() * 3.5,
         color,
+        blood: false,
       });
     }
   }
 
-  function findAnchor() {
-    let bestA = null;
-    let bestD = Infinity;
-
-    const startI = Math.floor((dist + player.x - 40) / CFG.branchSpacing);
-    const endI = Math.floor((dist + player.x + 340) / CFG.branchSpacing);
-
-    for (let i = startI; i <= endI; i += 1) {
-      const ax = i * CFG.branchSpacing + hash(i) * 60 - 20;
-      const ay = CFG.ceiling + 14 + hash(i + 77) * 34;
-      const sx = ax - dist;
-
-      if (sx < player.x - 30 || sx > player.x + 320) continue;
-      if (ay > player.y - 40) continue;
-
-      const d = Math.hypot(sx - player.x, ay - player.y);
-      if (d < bestD) {
-        bestD = d;
-        bestA = { x: sx, y: ay };
-      }
+  function bloodBurst(x, y) {
+    for (let i = 0; i < 26; i += 1) {
+      const a = Math.random() * Math.PI * 2;
+      const s = 320 * (0.3 + Math.random());
+      particles.push({
+        x,
+        y,
+        vx: Math.cos(a) * s,
+        vy: Math.sin(a) * s - 120,
+        life: 1,
+        decay: 0.8 + Math.random() * 0.6,
+        size: 2.5 + Math.random() * 4,
+        color: Math.random() < 0.5 ? "#7c141c" : "#c22a2a",
+        blood: true,
+      });
     }
-
-    return bestA;
   }
 
   function obstacleRects(o, sx) {
@@ -273,6 +281,103 @@
     ];
   }
 
+  // Intersección rayo vs rect. Devuelve t o null.
+  function rayRect(r, dirX, dirY, maxT) {
+    const ox = player.x;
+    const oy = player.y;
+
+    if (ox > r.x && ox < r.x + r.w && oy > r.y && oy < r.y + r.h) return null;
+
+    let tmin = 0;
+    let tmax = maxT;
+
+    if (Math.abs(dirX) < 0.0001) {
+      if (ox < r.x || ox > r.x + r.w) return null;
+    } else {
+      let t1 = (r.x - ox) / dirX;
+      let t2 = (r.x + r.w - ox) / dirX;
+      if (t1 > t2) [t1, t2] = [t2, t1];
+      tmin = Math.max(tmin, t1);
+      tmax = Math.min(tmax, t2);
+      if (tmin > tmax) return null;
+    }
+
+    if (Math.abs(dirY) < 0.0001) {
+      if (oy < r.y || oy > r.y + r.h) return null;
+    } else {
+      let t1 = (r.y - oy) / dirY;
+      let t2 = (r.y + r.h - oy) / dirY;
+      if (t1 > t2) [t1, t2] = [t2, t1];
+      tmin = Math.max(tmin, t1);
+      tmax = Math.min(tmax, t2);
+      if (tmin > tmax) return null;
+    }
+
+    if (tmin <= 0.001) return null;
+    return tmin;
+  }
+
+  // Raycast en una dirección: techo o muros/titanes.
+  function castRay(dirX, dirY, maxT) {
+    let bestT = Infinity;
+    let bestPt = null;
+
+    if (dirY < -0.0001) {
+      const t = (CFG.ceiling - player.y) / dirY;
+      if (t > 24 && t < maxT) {
+        const hx = player.x + dirX * t;
+        if (hx >= 0 && hx <= W) {
+          bestT = t;
+          bestPt = { x: hx, y: CFG.ceiling, kind: "ceiling" };
+        }
+      }
+    }
+
+    for (const o of obstacles) {
+      if (o.dead) continue;
+      const sx = o.x - dist;
+      if (sx > player.x + maxT + 200 || sx + o.w < player.x - maxT - 200) continue;
+
+      for (const r of obstacleRects(o, sx)) {
+        const t = rayRect(r, dirX, dirY, maxT);
+        if (t !== null && t > 24 && t < bestT) {
+          bestT = t;
+          bestPt = { x: player.x + dirX * t, y: player.y + dirY * t, kind: "wall" };
+        }
+      }
+    }
+
+    return bestPt;
+  }
+
+  // Engancha a la superficie más cercana en la dirección del apuntado,
+  // con tolerancia de ángulo para que enganchar muros sea fácil.
+  function resolveAnchor() {
+    const dx = aim.x - player.x;
+    const dy = aim.y - player.y;
+    const baseA = Math.atan2(dy, dx);
+    const maxT = CFG.maxRope;
+
+    let best = null;
+    let bestDist = Infinity;
+
+    const offsets = [0, 0.1, -0.1, 0.22, -0.22];
+
+    for (const off of offsets) {
+      const a = baseA + off;
+      const pt = castRay(Math.cos(a), Math.sin(a), maxT);
+      if (pt) {
+        const d = Math.hypot(pt.x - player.x, pt.y - player.y);
+        if (d < bestDist) {
+          bestDist = d;
+          best = pt;
+        }
+      }
+    }
+
+    return best;
+  }
+
   function aabb(a, b) {
     return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
   }
@@ -284,19 +389,27 @@
     const cy = o.titan
       ? (o.hanging ? CFG.ceiling + o.titanH / 2 : floorY - o.titanH / 2)
       : o.gapY + o.gapH / 2;
-    burst(sx + o.w / 2, cy, o.titan ? "#c88d66" : "#9aa0a8", 28, 280);
-    sound(90, 40, 0.25, 0.3, "sawtooth");
+
+    if (o.titan) {
+      bloodBurst(sx + o.w / 2, cy);
+      powerT = CFG.powerDuration;
+      sound(70, 38, 0.45, 0.3, "sawtooth");
+      sound(200, 640, 0.3, 0.14, "triangle");
+      atkText.textContent = "PODER";
+    } else {
+      burst(sx + o.w / 2, cy, "#9aa0a8", 26, 280);
+      burst(sx + o.w / 2, cy, "#ffffff", 10, 200);
+      sound(90, 40, 0.25, 0.3, "sawtooth");
+    }
   }
 
   function attack() {
-    if (state !== "playing" || cdT > 0) return;
+    if (state !== "playing" || attackT > 0 || cdT > 0) return;
 
     attackT = CFG.attackDuration;
-    cdT = CFG.attackCooldown;
     sound(320, 90, 0.3, 0.22, "square");
-    burst(player.x, player.y, "#f2c200", 16, 220);
+    burst(player.x, player.y, "#f2c200", 18, 240);
 
-    // Corte instantáneo de lo que tienes delante dentro del radio
     for (const o of obstacles) {
       if (o.dead) continue;
       const sx = o.x - dist;
@@ -310,28 +423,38 @@
   function update(dt) {
     if (state !== "playing") return;
 
-    const speed = worldSpeed();
     dist += speed * dt;
     score = Math.floor(dist / 10) + bonus;
 
-    if (attackT > 0) attackT = Math.max(0, attackT - dt);
-    if (cdT > 0) cdT = Math.max(0, cdT - dt);
+    if (powerT > 0) powerT = Math.max(0, powerT - dt);
 
-    anchor = held ? findAnchor() : null;
+    if (attackT > 0) {
+      attackT = Math.max(0, attackT - dt);
+      if (attackT === 0) cdT = powerT > 0 ? CFG.powerCooldown : CFG.attackCooldown;
+    } else if (cdT > 0) {
+      cdT = Math.max(0, cdT - dt);
+    }
+
+    anchor = held ? resolveAnchor() : null;
+
+    const base = lerp(CFG.baseSpeed, CFG.maxSpeed, difficulty());
+    speed = lerp(speed, base, 0.6 * dt);
 
     player.vy += CFG.gravity * dt;
 
     if (anchor) {
       const dx = anchor.x - player.x;
       const dy = anchor.y - player.y;
-      const d = Math.hypot(dx, dy) || 1;
+      const d = Math.max(30, Math.hypot(dx, dy));
+      const boost = powerT > 0 ? CFG.powerThrust : 1;
 
-      if (player.y > anchor.y + 26) {
-        player.vy += (dy / d) * CFG.grappleForce * dt;
-        player.vy = Math.max(player.vy, CFG.maxRise);
-      }
+      player.vy += (dy / d) * CFG.thrustV * boost * dt;
+      speed += (dx / d) * CFG.thrustH * boost * dt;
     }
 
+    if (held) speed += CFG.baseBoost * dt;
+
+    speed = clamp(speed, CFG.speedMin, CFG.speedMax);
     player.vy = clamp(player.vy, CFG.maxRise, CFG.maxFall);
     player.y += player.vy * dt;
 
@@ -346,7 +469,7 @@
       return;
     }
 
-    player.angle = clamp(player.vy / 750, -0.45, 0.85);
+    player.angle = clamp(player.vy / 700, -0.5, 0.9);
 
     spawnIfNeeded();
 
@@ -377,7 +500,7 @@
 
     for (let i = particles.length - 1; i >= 0; i -= 1) {
       const p = particles[i];
-      p.vy += 900 * dt;
+      p.vy += (p.blood ? 1500 : 900) * dt;
       p.x += p.vx * dt;
       p.y += p.vy * dt;
       p.life -= p.decay * dt;
@@ -485,13 +608,10 @@
 
   function drawCanopy() {
     const off = dist;
-    const startI = Math.floor((off - 200) / CFG.branchSpacing);
-    const endI = Math.floor((off + W + 200) / CFG.branchSpacing);
 
     ctx.fillStyle = "#243b2c";
     ctx.fillRect(0, 0, W, CFG.ceiling - 16);
 
-    // borde irregular del dosel
     for (let x = 0; x <= W + 50; x += 50) {
       const r = 22 + hash(Math.floor((x + off) / 50)) * 14;
       ctx.beginPath();
@@ -499,28 +619,12 @@
       ctx.fill();
     }
 
-    // ramas de anclaje
-    for (let i = startI; i <= endI; i += 1) {
-      const x = i * CFG.branchSpacing + hash(i) * 60 - 20 - off;
-      const y = CFG.ceiling + 14 + hash(i + 77) * 34;
-
-      ctx.strokeStyle = "#5a4632";
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.moveTo(x, CFG.ceiling - 8);
-      ctx.quadraticCurveTo(x + 8, CFG.ceiling + 10, x, y);
-      ctx.stroke();
-
-      ctx.fillStyle = "#2f5238";
-      ctx.beginPath();
-      ctx.arc(x, y - 6, 12, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.fillStyle = "rgba(242, 194, 0, 0.55)";
-      ctx.beginPath();
-      ctx.arc(x, y, 2.6, 0, Math.PI * 2);
-      ctx.fill();
-    }
+    ctx.strokeStyle = "rgba(200, 205, 215, 0.16)";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, CFG.ceiling);
+    ctx.lineTo(W, CFG.ceiling);
+    ctx.stroke();
   }
 
   function drawFog() {
@@ -637,24 +741,55 @@
     const y1 = player.y - 8;
     const x2 = anchor.x;
     const y2 = anchor.y;
+    const sag = anchor.kind === "ceiling" ? 0 : 8;
 
     ctx.save();
-    ctx.strokeStyle = "#f2c200";
-    ctx.shadowColor = "#f2c200";
-    ctx.shadowBlur = 8;
-    ctx.lineWidth = 1.6;
+    ctx.strokeStyle = "#c3c9d4";
+    ctx.shadowColor = "rgba(200, 206, 218, 0.9)";
+    ctx.shadowBlur = 6;
+    ctx.lineWidth = 1.8;
 
     ctx.beginPath();
     ctx.moveTo(x1, y1);
     const midX = (x1 + x2) / 2 + Math.sin(Date.now() * 0.02) * 2;
-    const midY = (y1 + y2) / 2 + 6;
+    const midY = (y1 + y2) / 2 + sag;
     ctx.quadraticCurveTo(midX, midY, x2, y2);
     ctx.stroke();
 
-    ctx.fillStyle = "#f2c200";
+    // Punto de enganche
+    ctx.fillStyle = "#ffffff";
+    ctx.shadowBlur = 10;
     ctx.beginPath();
-    ctx.arc(x2, y2, 3, 0, Math.PI * 2);
+    ctx.arc(x2, y2, 2.6, 0, Math.PI * 2);
     ctx.fill();
+
+    ctx.strokeStyle = "rgba(220, 226, 236, 0.7)";
+    ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    ctx.arc(x2, y2, 6 + Math.sin(Date.now() * 0.02) * 1.5, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawAimGuide() {
+    if (!held || state !== "playing") return;
+
+    const dx = aim.x - player.x;
+    const dy = aim.y - player.y;
+    const d = Math.hypot(dx, dy) || 1;
+
+    ctx.save();
+    ctx.globalAlpha = anchor ? 0.2 : 0.1;
+    ctx.strokeStyle = "#c3c9d4";
+    ctx.setLineDash([4, 8]);
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(player.x, player.y);
+    ctx.lineTo(
+      player.x + (dx / d) * Math.min(d, CFG.maxRope),
+      player.y + (dy / d) * Math.min(d, CFG.maxRope)
+    );
+    ctx.stroke();
     ctx.restore();
   }
 
@@ -665,14 +800,24 @@
     ctx.translate(player.x, player.y);
     ctx.rotate(player.angle);
 
-    ctx.fillStyle = "#b3121f";
+    // Capa verde (manto de la Legión)
+    ctx.fillStyle = "#5a8a44";
     ctx.beginPath();
     ctx.moveTo(-4, -6);
-    ctx.quadraticCurveTo(-22, 2, -16, 14);
+    ctx.quadraticCurveTo(-24, 2, -17, 15);
     ctx.lineTo(-2, 8);
     ctx.closePath();
     ctx.fill();
 
+    ctx.fillStyle = "#3f6b3a";
+    ctx.beginPath();
+    ctx.moveTo(-4, -4);
+    ctx.quadraticCurveTo(-16, 4, -11, 13);
+    ctx.lineTo(-3, 7);
+    ctx.closePath();
+    ctx.fill();
+
+    // Cuerpo
     ctx.fillStyle = "#4a5560";
     ctx.fillRect(-6, -8, 12, 18);
 
@@ -681,7 +826,12 @@
     ctx.beginPath();
     ctx.moveTo(-6, -2);
     ctx.lineTo(6, -2);
+    ctx.moveTo(0, -8);
+    ctx.lineTo(0, 4);
     ctx.stroke();
+
+    ctx.fillStyle = "#8a9098";
+    ctx.fillRect(-7, 6, 14, 4);
 
     ctx.fillStyle = "#e7c9a8";
     ctx.beginPath();
@@ -691,12 +841,80 @@
     ctx.fillStyle = "#20242a";
     ctx.fillRect(-5, -14, 10, 3);
 
-    if (attackT > 0) {
-      const t = attackT / CFG.attackDuration;
-      ctx.strokeStyle = `rgba(242, 194, 0, ${0.35 + t * 0.4})`;
-      ctx.lineWidth = 2 + t * 2;
+    ctx.restore();
+
+    // Aura verde del poder
+    if (powerT > 0) {
+      const pulse = 0.5 + Math.sin(Date.now() * 0.006) * 0.25;
+      ctx.save();
+      ctx.globalAlpha = 0.25 + pulse * 0.2;
+      ctx.strokeStyle = "#7db35f";
+      ctx.shadowColor = "#7db35f";
+      ctx.shadowBlur = 14;
+      ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.arc(0, 0, 26 + (1 - t) * CFG.attackRadius * 0.4, 0, Math.PI * 2);
+      ctx.arc(player.x, player.y, 24 + pulse * 4, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+    }
+  }
+
+  function drawAttack() {
+    if (attackT <= 0) return;
+
+    const p = attackT / CFG.attackDuration;
+    const r = CFG.attackRadius;
+    const blade = powerT > 0 ? "#7db35f" : "#f2c200";
+
+    ctx.save();
+    ctx.translate(player.x, player.y);
+
+    if (p > 0.82) {
+      const f = (p - 0.82) / 0.18;
+      const g = ctx.createRadialGradient(0, 0, 0, 0, 0, r * 1.15);
+      g.addColorStop(0, `rgba(255,255,255,${0.95 * f})`);
+      g.addColorStop(0.35, `rgba(242,194,0,${0.6 * f})`);
+      g.addColorStop(1, "rgba(242,194,0,0)");
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(0, 0, r * 1.15, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    ctx.globalAlpha = 0.45 + 0.45 * p;
+    ctx.strokeStyle = blade;
+    ctx.shadowColor = blade;
+    ctx.shadowBlur = 20;
+    ctx.lineWidth = 2 + 2 * p;
+    ctx.beginPath();
+    ctx.arc(0, 0, r * (0.55 + (1 - p) * 0.4), 0, Math.PI * 2);
+    ctx.stroke();
+
+    const rot = (1 - p) * Math.PI * 3.2;
+    for (let k = 0; k < 2; k += 1) {
+      const a0 = rot + k * Math.PI;
+      ctx.strokeStyle = blade;
+      ctx.lineWidth = 6;
+      ctx.beginPath();
+      ctx.arc(0, 0, r * 0.9, a0, a0 + 1.15);
+      ctx.stroke();
+
+      ctx.strokeStyle = "#ffffff";
+      ctx.lineWidth = 2.4;
+      ctx.beginPath();
+      ctx.arc(0, 0, r * 0.9, a0 + 0.05, a0 + 1.1);
+      ctx.stroke();
+    }
+
+    ctx.globalAlpha = 0.5 * p;
+    ctx.strokeStyle = "rgba(255,255,255,0.85)";
+    ctx.shadowBlur = 6;
+    ctx.lineWidth = 1;
+    for (let k = 0; k < 6; k += 1) {
+      const a = rot * 0.5 + k * Math.PI / 3;
+      ctx.beginPath();
+      ctx.moveTo(Math.cos(a) * r * 0.3, Math.sin(a) * r * 0.3);
+      ctx.lineTo(Math.cos(a) * r, Math.sin(a) * r);
       ctx.stroke();
     }
 
@@ -707,7 +925,13 @@
     for (const p of particles) {
       ctx.globalAlpha = Math.max(0, p.life);
       ctx.fillStyle = p.color;
-      ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
+      if (p.blood) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size / 2, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
+      }
     }
     ctx.globalAlpha = 1;
   }
@@ -752,8 +976,10 @@
     for (const o of obstacles) drawObstacle(o);
 
     drawLeaves();
+    drawAimGuide();
     drawCable();
     drawPlayer();
+    drawAttack();
     drawParticles();
 
     ctx.restore();
@@ -762,13 +988,32 @@
 
   function updateHUD() {
     scoreEl.textContent = score;
-    speedEl.textContent = Math.round(worldSpeed() / 10);
+    speedEl.textContent = Math.round(speed / 10);
     bestEl.textContent = best;
 
-    const ready = cdT <= 0;
-    atkText.textContent = ready ? "LISTO" : "RECARGA";
-    atkFill.style.width = ready ? "100%" : `${((CFG.attackCooldown - cdT) / CFG.attackCooldown) * 100}%`;
-    atkFill.classList.toggle("ready", ready);
+    if (attackT > 0) {
+      atkText.textContent = "ATAQUE";
+      atkFill.style.width = "100%";
+      atkFill.classList.add("ready");
+    } else if (cdT > 0) {
+      atkText.textContent = "RECARGA";
+      atkFill.style.width = `${((CFG.attackCooldown - cdT) / CFG.attackCooldown) * 100}%`;
+      atkFill.classList.remove("ready");
+    } else {
+      atkText.textContent = "LISTO";
+      atkFill.style.width = "100%";
+      atkFill.classList.add("ready");
+    }
+
+    if (powerT > 0) {
+      powText.textContent = "ACTIVO";
+      powFill.style.width = `${(powerT / CFG.powerDuration) * 100}%`;
+      powFill.classList.add("active");
+    } else {
+      powText.textContent = "—";
+      powFill.style.width = "0%";
+      powFill.classList.remove("active");
+    }
   }
 
   function frame(time) {
@@ -783,12 +1028,18 @@
     requestAnimationFrame(frame);
   }
 
-  function startHeld() {
+  function setAim(clientX, clientY) {
+    const rect = canvas.getBoundingClientRect();
+    aim.x = clientX - rect.left;
+    aim.y = clientY - rect.top;
+  }
+
+  function startHeld(clientX, clientY) {
     initAudio();
     if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
-
-    const a = findAnchor();
-    if (a) burst(a.x, a.y, "#f2c200", 8, 150);
+    if (typeof clientX === "number") setAim(clientX, clientY);
+    const a = resolveAnchor();
+    if (a) burst(a.x, a.y, "#c3c9d4", 6, 140);
     sound(520, 900, 0.12, 0.12, "triangle");
     held = true;
   }
@@ -802,7 +1053,11 @@
   canvas.addEventListener("pointerdown", (e) => {
     if (state !== "playing") return;
     e.preventDefault();
-    startHeld();
+    startHeld(e.clientX, e.clientY);
+  });
+
+  canvas.addEventListener("pointermove", (e) => {
+    setAim(e.clientX, e.clientY);
   });
 
   window.addEventListener("pointerup", endHeld);
@@ -820,7 +1075,11 @@
 
     if (e.code === "ArrowUp" || e.code === "KeyW") {
       e.preventDefault();
-      if (state === "playing" && !e.repeat) startHeld();
+      if (state === "playing" && !e.repeat) {
+        aim.x = player.x + 130;
+        aim.y = player.y - 130;
+        startHeld();
+      }
     }
 
     if (e.code === "Enter" && state !== "playing") reset();

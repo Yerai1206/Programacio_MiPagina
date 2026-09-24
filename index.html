@@ -6,10 +6,10 @@
   <title>Yerai Piera Langa | Desarrollo web y DAM</title>
   <meta name="description" content="Portafolio personal de Yerai Piera Langa, estudiante de 1º DAM en el IES Simarro. Interés por desarrollo web, aplicaciones y aprendizaje continuo." />
   <meta name="color-scheme" content="light dark" />
-  <meta name="theme-color" content="#f4f1ea" />
+  <meta name="theme-color" content="#f7f6f3" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Shippori+Mincho:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script src="script.js" defer></script>
 </head>
@@ -52,10 +52,14 @@
   <main id="contenido">
     <section id="inicio" class="hero">
       <div class="container hero-grid">
-        <div class="hero__content">
-          <p class="eyebrow">Estudiante de 1º DAM · IES Simarro</p>
-          <h1>Yerai Piera Langa</h1>
-          <p class="hero__motto">Construir aplicaciones que funcionen, se entiendan y tengan criterio.</p>
+        <div class="hero-copy">
+          <div class="status">
+            <span class="status-dot" aria-hidden="true"></span>
+            Estudiante de 1º DAM · IES Simarro
+          </div>
+
+          <h1 class="hero-title">Yerai Piera Langa</h1>
+          <p class="hero-motto">Desarrollo web, lógica y mejora continua</p>
           <p class="lead">
             Me gustaría dedicarme a la programación, ya que siempre me ha llamado mucho la atención el
             funcionamiento de las páginas web y las aplicaciones. Trabajo con constancia, aprendizaje
@@ -68,20 +72,37 @@
           </div>
         </div>
 
-        <aside class="focus-card" aria-label="Perfil profesional">
-          <h3>Perfil rápido</h3>
-          <ul class="focus-list">
-            <li><span>Formación</span><strong>Bachillerato científico + 1º DAM</strong></li>
-            <li><span>Centro</span><strong>IES Simarro</strong></li>
-            <li><span>Interés</span><strong>Desarrollo web y aplicaciones</strong></li>
-            <li><span>Método</span><strong>Práctica, orden y mejora continua</strong></li>
-          </ul>
-          <div class="chips">
-            <span class="chip">HTML</span>
-            <span class="chip">CSS</span>
-            <span class="chip">JavaScript</span>
-            <span class="chip">Gimnasio</span>
-            <span class="chip">Fútbol</span>
+        <aside class="profile-card" aria-label="Perfil profesional">
+          <div class="profile-head">
+            <span>Perfil</span>
+            <strong>DAM</strong>
+          </div>
+
+          <dl class="profile-list">
+            <div class="profile-row">
+              <dt>Formación</dt>
+              <dd>Bachillerato científico + 1º DAM</dd>
+            </div>
+            <div class="profile-row">
+              <dt>Centro</dt>
+              <dd>IES Simarro</dd>
+            </div>
+            <div class="profile-row">
+              <dt>Interés</dt>
+              <dd>Desarrollo web y aplicaciones</dd>
+            </div>
+            <div class="profile-row">
+              <dt>Método</dt>
+              <dd>Práctica, orden y mejora continua</dd>
+            </div>
+          </dl>
+
+          <div class="tags">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">Gimnasio</span>
+            <span class="tag">Fútbol</span>
           </div>
         </aside>
       </div>
@@ -90,8 +111,8 @@
     <section id="sobre" class="section">
       <div class="container">
         <div class="section-head">
-          <span class="chapter__label">01 · Sobre mí</span>
-          <h2>Perfil, constancia y criterio</h2>
+          <span class="section-label">01 · Sobre mí</span>
+          <h2 class="section-title">Perfil, constancia y criterio</h2>
           <p class="lead">
             Combino formación científica, estudios técnicos y disciplina personal. Me interesa entender
             cómo funcionan las cosas, mejorar con práctica y construir interfaces claras.
@@ -126,48 +147,44 @@
       </div>
     </section>
 
-    <section id="hecho" class="section section--alt">
+    <section id="hecho" class="section section--soft">
       <div class="container">
         <div class="section-head">
-          <span class="chapter__label">02 · Lo que he hecho</span>
-          <h2>Recorrido y prácticas</h2>
+          <span class="section-label">02 · Lo que he hecho</span>
+          <h2 class="section-title">Recorrido y prácticas</h2>
           <p class="lead">
             Un camino orientado a programación, desarrollo web y mejora continua mediante práctica
             directa.
           </p>
         </div>
 
-        <ol class="timeline">
-          <li class="timeline-item">
-            <p class="timeline-date">Bachillerato científico</p>
-            <h3>Base lógica y científica</h3>
+        <ol class="steps">
+          <li class="step">
+            <h3>Base científica</h3>
             <p>
-              Formación orientada al razonamiento, análisis, resolución de problemas y comprensión
-              técnica.
+              Bachillerato científico con enfoque en razonamiento, análisis, resolución de problemas y
+              comprensión técnica.
             </p>
           </li>
 
-          <li class="timeline-item">
-            <p class="timeline-date">1º DAM</p>
-            <h3>Programación y entornos</h3>
+          <li class="step">
+            <h3>1º DAM</h3>
             <p>
               Inicio del ciclo de Desarrollo de Aplicaciones Multiplataforma, con foco en lógica,
               interfaces y desarrollo.
             </p>
           </li>
 
-          <li class="timeline-item">
-            <p class="timeline-date">Proyectos personales</p>
-            <h3>Práctica con HTML, CSS y JavaScript</h3>
+          <li class="step">
+            <h3>Proyectos personales</h3>
             <p>
               Construcción de páginas, ajustes visuales, estructura, accesibilidad básica y control
               por ficheros separados.
             </p>
           </li>
 
-          <li class="timeline-item">
-            <p class="timeline-date">En curso</p>
-            <h3>Mejora de marca y usabilidad</h3>
+          <li class="step">
+            <h3>Mejora continua</h3>
             <p>
               Diseño más profesional, lectura clara, identidad visual, rendimiento y experiencia de
               usuario.
@@ -180,8 +197,8 @@
     <section id="gustos" class="section">
       <div class="container">
         <div class="section-head">
-          <span class="chapter__label">03 · Me gusta</span>
-          <h2>Inquietudes, gustos y referentes</h2>
+          <span class="section-label">03 · Me gusta</span>
+          <h2 class="section-title">Inquietudes, gustos y referentes</h2>
           <p class="lead">
             La música, la disciplina, la estrategia y las historias intensas también influyen en mi
             forma de aprender y trabajar.
@@ -221,19 +238,19 @@
       </div>
     </section>
 
-    <section id="futuro" class="section section--alt">
+    <section id="futuro" class="section section--soft">
       <div class="container">
         <div class="section-head">
-          <span class="chapter__label">04 · Quiero ser</span>
-          <h2>Objetivo profesional</h2>
+          <span class="section-label">04 · Quiero ser</span>
+          <h2 class="section-title">Objetivo profesional</h2>
           <p class="lead">
             Quiero crecer como programador, especialmente en desarrollo web, interfaces, lógica y
             funcionamiento real de aplicaciones.
           </p>
         </div>
 
-        <div class="objective-grid">
-          <div class="objective-card">
+        <div class="two-col">
+          <div class="panel">
             <h3>Meta</h3>
             <p>
               Dedicarme a la programación y seguir aprendiendo con proyectos reales, buenas prácticas
@@ -241,7 +258,7 @@
             </p>
           </div>
 
-          <div class="roadmap">
+          <div class="panel">
             <h3>Ruta</h3>
             <ul class="roadmap-list">
               <li>Consolidar HTML, CSS y JavaScript puro.</li>
@@ -262,36 +279,71 @@
     <section id="contacto" class="section">
       <div class="container">
         <div class="section-head">
-          <span class="chapter__label">05 · Contacto</span>
-          <h2>Hablemos de proyectos</h2>
+          <span class="section-label">05 · Contacto</span>
+          <h2 class="section-title">Hablemos de proyectos</h2>
           <p class="lead">
             Abierto a prácticas, colaboraciones, feedback y oportunidades de aprendizaje.
           </p>
         </div>
 
         <div class="contact-grid">
-          <div class="contact-card">
+          <div class="panel">
             <h3>Contacto directo</h3>
             <p>
               Puedes escribirme por correo o revisar mis enlaces públicos.
             </p>
+
             <div class="contact-links">
-              <a class="btn btn--primary" href="mailto:tu-correo@ejemplo.com">Email</a>
-              <a class="btn" href="https://github.com/tu-usuario" target="_blank" rel="noopener noreferrer">GitHub</a>
-              <a class="btn" href="https://www.linkedin.com/in/tu-usuario" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-              <button class="btn" type="button" data-copy-email="tu-correo@ejemplo.com">Copiar email</button>
+              <a class="link" href="mailto:yerpielan@alu.edu.gva.es">
+                <span>Email</span>
+                <small>yerpielan@alu.edu.gva.es</small>
+                <span class="arrow" aria-hidden="true">→</span>
+              </a>
+
+              <a class="link" href="https://github.com/yerpielan" target="_blank" rel="noopener noreferrer">
+                <span>GitHub</span>
+                <small>github.com/yerpielan</small>
+                <span class="arrow" aria-hidden="true">→</span>
+              </a>
+
+              <a class="link" href="https://www.linkedin.com/in/tu-usuario" target="_blank" rel="noopener noreferrer">
+                <span>LinkedIn</span>
+                <small>linkedin.com/in/tu-usuario</small>
+                <span class="arrow" aria-hidden="true">→</span>
+              </a>
+
+              <button class="link" type="button" data-copy-email="yerpielan@alu.edu.gva.es">
+                <span>Copiar email</span>
+                <small>Acción rápida</small>
+                <span class="arrow" aria-hidden="true">→</span>
+              </button>
             </div>
           </div>
 
-          <aside class="contact-card contact-card--soft">
+          <aside class="panel panel--soft">
             <h3>Resumen</h3>
-            <ul class="contact-meta">
-              <li><span>Nombre</span><strong>Yerai Piera Langa</strong></li>
-              <li><span>Ciclo</span><strong>1º DAM</strong></li>
-              <li><span>Centro</span><strong>IES Simarro</strong></li>
-              <li><span>Enfoque</span><strong>Desarrollo web</strong></li>
-              <li><span>Estado</span><strong>Aprendiendo y mejorando</strong></li>
-            </ul>
+            <div class="contact-meta">
+              <div>
+                <span>Nombre</span>
+                <strong>Yerai Piera Langa</strong>
+              </div>
+              <div>
+                <span>Ciclo</span>
+                <strong>1º DAM</strong>
+              </div>
+              <div>
+                <span>Centro</span>
+                <strong>IES Simarro</strong>
+              </div>
+              <div>
+                <span>Enfoque</span>
+                <strong>Desarrollo web</strong>
+              </div>
+              <div>
+                <span>Estado</span>
+                <strong>Aprendiendo y mejorando</strong>
+              </div>
+            </div>
           </aside>
         </div>
       </div>
@@ -301,6 +353,9 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <p>© <span id="year"></span> Yerai Piera Langa</p>
+      <a class="btn footer-game" href="juego.html" aria-label="Abrir minijuego de Ataque a los Titanes">
+        Minijuego AoT
+      </a>
       <p class="footer-note">HTML · CSS · JavaScript</p>
     </div>
   </footer>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minijuego AoT | Yerai Piera Langa</title>
+  <meta name="description" content="Minijuego de Ataque a los Titanes estilo Flappy con equipo de maniobras en un bosque." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="juego.css" />
+  <script src="juego.js" defer></script>
+</head>
+<body class="game-body">
+  <header class="game-header">
+    <a class="back" href="index.html">← Volver</a>
+    <h1>ODM Runner</h1>
+    <span class="best">Mejor: <b id="best">0</b></span>
+  </header>
+
+  <main class="game-shell">
+    <canvas id="game"></canvas>
+
+    <div class="hud" aria-hidden="true">
+      <span>Distancia: <b id="score">0</b> m</span>
+      <span>Velocidad: <b id="speed">0</b></span>
+      <span class="hud-atk">
+        Ataque: <b id="atkText">LISTO</b>
+        <span class="atk-bar"><i id="atkFill"></i></span>
+      </span>
+      <span class="hud-atk hud-power">
+        Poder: <b id="powText">—</b>
+        <span class="pow-bar"><i id="powFill"></i></span>
+      </span>
+    </div>
+
+    <div id="overlay" class="overlay">
+      <div class="panel">
+        <p class="kicker">Ataque a los Titanes</p>
+        <h2 id="overlayTitle">Equipo de Maniobras</h2>
+        <p id="overlayText">
+          Mantén <b>clic</b> (o <b>↑ / W</b>) y <b>mueve el ratón</b>: el cable se engancha a la
+          superficie más cercana (techo o muros). Apunta atrás para frenar.
+          <b>Espacio</b> corta todo lo cercano. Matar titanes activa el <b>Poder de los Titanes</b>.
+        </p>
+
+        <div class="controls">
+          <span class="key">Mantén Clic</span>
+          <span class="key">Ratón</span>
+          <span class="key">Espacio</span>
+        </div>
+
+        <button id="actionBtn" class="btn" type="button">Empezar</button>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
