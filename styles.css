@@ -361,3 +361,45 @@ input[name="_honey"] { position: absolute !important; left: -9999px; width: 1px;
   .is-zapped { animation: none; color: var(--ray); text-shadow: 0 0 10px var(--ray); }
   .msg--typing i { animation: none; opacity: 0.6; }
 }
+
+/* ---------- AVATAR DE PERFIL ---------- */
+.avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 1.15rem;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.avatar-frame {
+  width: 72px;
+  height: 72px;
+  flex: 0 0 auto;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--surface-soft);
+  box-shadow: var(--shadow-sm);
+}
+
+.avatar-frame img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.avatar-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.avatar-note {
+  margin: 0.15rem 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+}

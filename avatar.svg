@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 400 400" width="400" height="400" role="img" aria-label="Retrato ilustrado de Yerai Piera Langa">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7f3ea" />
+      <stop offset="1" stop-color="#e7ddcb" />
+    </linearGradient>
+    <linearGradient id="jacket" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c8182a" />
+      <stop offset="1" stop-color="#8d0e18" />
+    </linearGradient>
+    <linearGradient id="skin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f0c9a4" />
+      <stop offset="1" stop-color="#dca87f" />
+    </linearGradient>
+    <path id="f" d="M0 0C22-8 52-4 70 12 50 20 20 18 0 0Z" fill="#e0a52a" />
+    <g id="wing">
+      <use xlink:href="#f" transform="translate(212,148) rotate(-40)" opacity=".95" />
+      <use xlink:href="#f" transform="translate(216,164) rotate(-20) scale(.96)" opacity=".85" />
+      <use xlink:href="#f" transform="translate(218,182) rotate(-2) scale(.9)" opacity=".72" />
+      <use xlink:href="#f" transform="translate(216,198) rotate(18) scale(.8)" opacity=".6" />
+      <use xlink:href="#f" transform="translate(212,212) rotate(38) scale(.68)" opacity=".48" />
+    </g>
+    <clipPath id="circle"><circle cx="200" cy="200" r="200" /></clipPath>
+  </defs>
+
+  <g clip-path="url(#circle)">
+    <rect width="400" height="400" fill="url(#bg)" />
+    <circle cx="200" cy="215" r="150" fill="#ffffff" opacity=".5" />
+
+    <use xlink:href="#wing" />
+    <use xlink:href="#wing" transform="translate(400,0) scale(-1,1)" />
+
+    <!-- chaqueta -->
+    <path d="M92 400c4-82 44-116 108-116s104 34 108 116Z" fill="url(#jacket)" />
+    <path d="M200 284l-30 46 30 26 30-26Z" fill="#7c0c15" opacity=".55" />
+    <!-- correas ODM -->
+    <path d="M152 300l48 52 48-52" fill="none" stroke="#2b3038" stroke-width="9" stroke-linejoin="round" />
+    <rect x="190" y="340" width="20" height="18" rx="4" fill="#e0a52a" />
+
+    <!-- cuello -->
+    <path d="M180 258h40v34h-40Z" fill="url(#skin)" />
+    <path d="M180 276c8 10 32 10 40 0v14h-40Z" fill="#c98f68" opacity=".5" />
+
+    <!-- cabeza -->
+    <ellipse cx="200" cy="206" rx="58" ry="66" fill="url(#skin)" />
+    <path d="M142 200c-2-56 26-80 58-80s60 24 58 80c-8-30-26-42-58-42s-50 12-58 42Z" fill="#2b2320" />
+    <path d="M148 172c10-18 26-26 52-26" fill="none" stroke="#3a2f2a" stroke-width="6" stroke-linecap="round" opacity=".7" />
+
+    <!-- cascos (música) -->
+    <path d="M136 200a64 64 0 0 1 128 0" fill="none" stroke="#2b3038" stroke-width="11" stroke-linecap="round" />
+    <rect x="124" y="192" width="20" height="38" rx="10" fill="#2b3038" />
+    <rect x="256" y="192" width="20" height="38" rx="10" fill="#2b3038" />
+    <rect x="129" y="200" width="10" height="22" rx="5" fill="#e0a52a" />
+    <rect x="261" y="200" width="10" height="22" rx="5" fill="#e0a52a" />
+
+    <!-- cara -->
+    <path d="M172 194c5-4 12-4 17-1" fill="none" stroke="#2b2320" stroke-width="4" stroke-linecap="round" />
+    <path d="M211 193c5-3 12-3 17 1" fill="none" stroke="#2b2320" stroke-width="4" stroke-linecap="round" />
+    <ellipse cx="180" cy="208" rx="5.5" ry="6.5" fill="#20242a" />
+    <ellipse cx="220" cy="208" rx="5.5" ry="6.5" fill="#20242a" />
+    <circle cx="182" cy="206" r="1.8" fill="#ffffff" opacity=".9" />
+    <circle cx="222" cy="206" r="1.8" fill="#ffffff" opacity=".9" />
+    <path d="M196 224c2 4 6 4 8 0" fill="none" stroke="#c98f68" stroke-width="3" stroke-linecap="round" />
+    <path d="M188 240c6 5 18 5 24 0" fill="none" stroke="#b06a5c" stroke-width="4" stroke-linecap="round" />
+  </g>
+</svg>
