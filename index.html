@@ -1,382 +1,453 @@
 <!DOCTYPE html>
 <html lang="es" data-theme="light">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Yerai Piera Langa | Desarrollo web y DAM</title>
-<meta name="description" content="Portafolio de Yerai Piera Langa, 19 años, estudiante de 1º DAM en el IES Simarro (Valencia). Desarrollo web, aplicaciones y aprendizaje continuo." />
-<meta name="color-scheme" content="light dark" />
-<meta name="theme-color" content="#f6f5f1" />
-<link rel="icon" href="favicon.svg" type="image/svg+xml" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css" />
-<script src="script.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yerai Piera Langa · Portafolio DAM</title>
+  <meta name="description" content="Portafolio de Yerai Piera Langa, estudiante de 1º DAM en Valencia. Proyectos, ODM Runner, formación, contacto y chatbot.">
+  <meta name="author" content="Yerai Piera Langa">
+  <meta name="theme-color" content="#0284c7">
+  <link rel="icon" href="favicon.svg">
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-<a class="skip-link" href="#contenido">Saltar al contenido</a>
-<canvas id="bolt" aria-hidden="true"></canvas>
+  <a class="skip-link" href="#inicio">Saltar al contenido principal</a>
 
-<header class="site-header">
-  <div class="container header-inner">
-    <a class="brand" href="#inicio">YERAI<span>PIERA</span></a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#inicio" aria-label="Ir al inicio">
+        <span class="brand-mark">YP</span>
+        <span class="brand-text">Yerai Piera</span>
+      </a>
 
-    <nav id="main-nav" class="nav" aria-label="Navegación principal">
-      <a href="#sobre">Sobre mí</a>
-      <a href="#hecho">Lo que he hecho</a>
-      <a href="#gustos">Me gusta</a>
-      <a href="#futuro">Quiero ser</a>
-      <a href="#contacto">Contacto</a>
-    </nav>
+      <nav class="main-nav" aria-label="Navegación principal">
+        <ul class="nav-list">
+          <li><a class="nav-link active" href="#inicio">Inicio</a></li>
+          <li><a class="nav-link" href="#sobre-mi">Sobre mí</a></li>
+          <li><a class="nav-link" href="#formacion">Formación</a></li>
+          <li><a class="nav-link" href="#proyectos">Proyectos</a></li>
+          <li><a class="nav-link" href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
 
-    <div class="header-actions">
-      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Activar tema oscuro">
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="4" />
-          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
-        </svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-        </svg>
-      </button>
-
-      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menú">
-        <span></span><span></span><span></span>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Cambiar tema claro u oscuro">
+        <span class="theme-icon" aria-hidden="true">☀</span>
+        <span class="theme-text">Tema</span>
       </button>
     </div>
-  </div>
-</header>
+  </header>
 
-<main id="contenido">
-  <section id="inicio" class="hero">
-    <div class="container hero-grid">
-      <div class="hero-copy">
-        <div class="status">
-          <span class="status-dot" aria-hidden="true"></span>
-          19 años · 1º DAM · IES Simarro · Valencia
-        </div>
+  <main>
+    <section id="inicio" class="section hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Portafolio · Valencia · España</p>
 
-        <h1 class="hero-title">Yerai Piera<br />Langa</h1>
-        <p class="hero-motto">Desarrollo web, lógica y mejora continua</p>
-        <p class="lead">
-          Me gustaría dedicarme a la programación, ya que siempre me ha llamado mucho la atención el
-          funcionamiento de las páginas web y las aplicaciones. Trabajo con constancia, aprendizaje
-          continuo y una base científica + DAM.
-        </p>
+          <h1>Hola, soy <span class="highlight">Yerai Piera Langa</span></h1>
 
-        <div class="cta-row">
-          <a class="btn btn--primary" href="#contacto">Contactar</a>
-          <a class="btn" href="#hecho">Ver recorrido</a>
-          <button class="btn btn--ghost" type="button" data-open-chat>Abrir asistente</button>
-        </div>
-      </div>
+          <p class="lead">
+            Estudiante de <strong>1º de DAM</strong> con interés en desarrollo web,
+            interfaces limpias, JavaScript y proyectos propios. Aquí tienes mi
+            portafolio, formación, proyectos y contacto real.
+          </p>
 
-      <aside class="profile-card" aria-label="Perfil profesional">
-        <div class="avatar-row">
-          <span class="avatar-frame">
-            <img src="avatar.svg" alt="Retrato ilustrado de Yerai Piera Langa" width="72" height="72" loading="lazy" />
-          </span>
-          <div>
-            <p class="avatar-name">Yerai Piera Langa</p>
-            <p class="avatar-note">Valencia, España · 19 años</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#contacto">Contactar</a>
+            <a class="btn secondary" href="juego/juego.html">Jugar ODM Runner</a>
           </div>
-        </div>
 
-        <div class="profile-head">
-          <span>Perfil</span>
-          <strong>DAM</strong>
-        </div>
-
-        <dl class="profile-list">
-          <div class="profile-row"><dt>Edad</dt><dd>19 años</dd></div>
-          <div class="profile-row"><dt>Formación</dt><dd>Bachillerato científico + 1º DAM</dd></div>
-          <div class="profile-row"><dt>Centro</dt><dd>IES Simarro</dd></div>
-          <div class="profile-row"><dt>Ubicación</dt><dd>Valencia, España</dd></div>
-          <div class="profile-row"><dt>Interés</dt><dd>Desarrollo web y aplicaciones</dd></div>
-          <div class="profile-row"><dt>Método</dt><dd>Práctica, orden y mejora continua</dd></div>
-        </dl>
-
-        <div class="tags">
-          <span class="tag">HTML</span>
-          <span class="tag">CSS</span>
-          <span class="tag">JavaScript</span>
-          <span class="tag">Git</span>
-          <span class="tag">Gimnasio</span>
-          <span class="tag">Fútbol</span>
-        </div>
-      </aside>
-    </div>
-  </section>
-
-  <section id="sobre" class="section">
-    <div class="container">
-      <div class="section-head">
-        <span class="section-label">01 · Sobre mí</span>
-        <h2 class="section-title">Perfil, constancia y criterio</h2>
-        <p class="lead">
-          Tengo 19 años, vengo de bachillerato científico y curso 1º de DAM en el IES Simarro. Combino
-          formación científica, estudios técnicos y disciplina personal. Me interesa entender cómo
-          funcionan las cosas, mejorar con práctica y construir interfaces claras.
-        </p>
-      </div>
-
-      <div class="grid">
-        <article class="card"><h3>Formación</h3><p>Bachillerato científico y 1º de DAM. Base lógica, aprendizaje técnico y trabajo orientado a resolución de problemas.</p></article>
-        <article class="card"><h3>Disciplina</h3><p>Gimnasio y algún partido de fútbol los fines de semana. Hábitos, constancia y equilibrio para rendir mejor.</p></article>
-        <article class="card"><h3>Curiosidad técnica</h3><p>Me atrae el funcionamiento interno de páginas web, aplicaciones, interfaces, lógica y estructura.</p></article>
-      </div>
-    </div>
-  </section>
-
-  <section id="hecho" class="section section--soft">
-    <div class="container">
-      <div class="section-head">
-        <span class="section-label">02 · Lo que he hecho</span>
-        <h2 class="section-title">Recorrido y prácticas</h2>
-        <p class="lead">Un camino orientado a programación, desarrollo web y mejora continua mediante práctica directa.</p>
-      </div>
-
-      <ol class="steps">
-        <li class="step"><h3>Base científica</h3><p>Bachillerato científico con enfoque en razonamiento, análisis, resolución de problemas y comprensión técnica.</p></li>
-        <li class="step"><h3>1º DAM</h3><p>Inicio del ciclo de Desarrollo de Aplicaciones Multiplataforma, con foco en lógica, interfaces y desarrollo.</p></li>
-        <li class="step"><h3>Proyectos personales</h3><p>Construcción de páginas, ajustes visuales, estructura, accesibilidad básica y control por ficheros separados.</p></li>
-        <li class="step"><h3>Mejora continua</h3><p>Diseño más profesional, lectura clara, identidad visual, rendimiento y experiencia de usuario.</p></li>
-      </ol>
-    </div>
-  </section>
-
-  <section id="gustos" class="section">
-    <div class="container">
-      <div class="section-head">
-        <span class="section-label">03 · Me gusta</span>
-        <h2 class="section-title">Inquietudes, gustos y referentes</h2>
-        <p class="lead">La música, la disciplina, la estrategia y las historias intensas también influyen en mi forma de aprender y trabajar.</p>
-      </div>
-
-      <div class="grid">
-        <article class="card"><h3>Ataque a los Titanes</h3><p>Mi serie favorita: tensión, determinación, sacrificio y superación. De ahí el minijuego de esta web.</p></article>
-        <article class="card"><h3>Música</h3><p>Prácticamente de todos los tipos. Me ayuda a mantener foco, ritmo y constancia.</p></article>
-        <article class="card"><h3>Videojuegos</h3><p>Rocket League y otros títulos donde importan reflejos, decisión, práctica y mejora continua.</p></article>
-        <article class="card"><h3>Deporte</h3><p>Gimnasio y algún partido los findes. Equilibrio, energía y disciplina.</p></article>
-      </div>
-    </div>
-  </section>
-
-  <section id="futuro" class="section section--soft">
-    <div class="container">
-      <div class="section-head">
-        <span class="section-label">04 · Quiero ser</span>
-        <h2 class="section-title">Objetivo profesional</h2>
-        <p class="lead">Quiero crecer como programador, especialmente en desarrollo web, interfaces, lógica y funcionamiento real de aplicaciones.</p>
-      </div>
-
-      <div class="two-col">
-        <div class="panel"><h3>Meta</h3><p>Dedicarme a la programación y seguir aprendiendo con proyectos reales, buenas prácticas y criterio técnico.</p></div>
-        <div class="panel">
-          <h3>Ruta</h3>
-          <ul class="roadmap-list">
-            <li>Consolidar HTML, CSS y JavaScript puro.</li>
-            <li>Mejorar accesibilidad, rendimiento y estructura.</li>
-            <li>Aplicar buenas prácticas y código ordenado.</li>
-            <li>Crear proyectos propios y portafolio profesional.</li>
+          <ul class="badges" aria-label="Datos principales">
+            <li>19 años</li>
+            <li>1º DAM</li>
+            <li>IES Simarro</li>
+            <li>Valencia</li>
+            <li>JavaScript</li>
           </ul>
         </div>
+
+        <div class="hero-media">
+          <img
+            src="avatar.svg"
+            alt="Avatar personalizado de Yerai Piera Langa"
+            class="avatar-frame large">
+        </div>
       </div>
+    </section>
 
-      <blockquote class="dedication">
-        Me gustaría dedicarme a la programación, ya que siempre me ha llamado mucho la atención el
-        funcionamiento de las páginas web y las aplicaciones.
-      </blockquote>
-    </div>
-  </section>
-
-  <section id="contacto" class="section">
-    <div class="container">
-      <div class="section-head">
-        <span class="section-label">05 · Contacto</span>
-        <h2 class="section-title">Hablemos de proyectos</h2>
-        <p class="lead">Abierto a prácticas, colaboraciones, feedback y oportunidades de aprendizaje. Rellena el formulario o pregunta al asistente.</p>
-      </div>
-
-      <div class="contact-grid">
-        <div class="panel panel--form" id="contact-panel">
-          <div class="panel-head">
-            <h3>Escríbeme</h3>
-            <p>Validación en cliente y envío a <b>yerpielan@alu.edu.gva.es</b> mediante Web3Forms, con confirmación automática para ti.</p>
-          </div>
-
-          <div id="form-status" class="form-status" role="alert" aria-live="assertive"></div>
-
-          <form id="contact-form" class="form" novalidate>
-            <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
-
-            <div class="form-row">
-              <div class="field">
-                <label for="f-name">Nombre <span class="req" aria-hidden="true">*</span></label>
-                <input id="f-name" name="name" type="text" autocomplete="given-name" required minlength="2" maxlength="60" placeholder="Tu nombre" aria-describedby="err-name" />
-                <p class="field-error" id="err-name"></p>
-              </div>
-              <div class="field">
-                <label for="f-lastname">Apellidos <span class="req" aria-hidden="true">*</span></label>
-                <input id="f-lastname" name="lastname" type="text" autocomplete="family-name" required minlength="2" maxlength="80" placeholder="Tus apellidos" aria-describedby="err-lastname" />
-                <p class="field-error" id="err-lastname"></p>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="field">
-                <label for="f-email">Correo electrónico <span class="req" aria-hidden="true">*</span></label>
-                <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required maxlength="120" placeholder="tucorreo@dominio.com" aria-describedby="err-email" />
-                <p class="field-error" id="err-email"></p>
-              </div>
-              <div class="field">
-                <label for="f-phone">Teléfono <span class="opt">(opcional)</span></label>
-                <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="20" placeholder="+34 600 000 000" aria-describedby="err-phone" />
-                <p class="field-error" id="err-phone"></p>
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="f-topic">Motivo <span class="req" aria-hidden="true">*</span></label>
-              <select id="f-topic" name="topic" required aria-describedby="err-topic">
-                <option value="">Selecciona una opción…</option>
-                <option value="Prácticas / FCT">Prácticas / FCT</option>
-                <option value="Oferta laboral">Oferta laboral</option>
-                <option value="Colaboración en un proyecto">Colaboración en un proyecto</option>
-                <option value="Feedback sobre la web">Feedback sobre la web</option>
-                <option value="Otro">Otro</option>
-              </select>
-              <p class="field-error" id="err-topic"></p>
-            </div>
-
-            <div class="field">
-              <label for="f-message">Mensaje <span class="req" aria-hidden="true">*</span></label>
-              <textarea id="f-message" name="message" rows="5" required minlength="20" maxlength="1000" placeholder="Cuéntame quién eres, qué necesitas y, si quieres, cómo te puedo ayudar." aria-describedby="err-message msg-count"></textarea>
-              <div class="field-foot">
-                <p class="field-error" id="err-message"></p>
-                <p class="counter" id="msg-count" aria-live="polite">0 / 1000 (mínimo 20)</p>
-              </div>
-            </div>
-
-            <div class="field field--check">
-              <input id="f-consent" name="consent" type="checkbox" required aria-describedby="err-consent" />
-              <label for="f-consent">He leído y acepto que Yerai Piera Langa trate mis datos únicamente para responder a esta consulta. <span class="req" aria-hidden="true">*</span></label>
-              <p class="field-error" id="err-consent"></p>
-            </div>
-
-            <div class="form-actions">
-              <button type="submit" class="btn btn--primary" id="submit-btn">Enviar mensaje</button>
-              <button type="button" class="btn" id="mailto-btn">Enviar con mi correo</button>
-              <button type="button" class="btn btn--ghost" id="clear-btn">Limpiar</button>
-              <p class="form-hint" id="draft-hint" aria-live="polite"></p>
-            </div>
-          </form>
-
-          <div id="form-success" class="success">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M20 6 9 17l-5-5" />
-            </svg>
-            <h4>Mensaje enviado correctamente</h4>
-            <p id="success-text">Gracias por escribir. Te he enviado una confirmación a tu correo.</p>
-            <button type="button" class="btn" id="again-btn">Enviar otro mensaje</button>
-          </div>
+    <section id="sobre-mi" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Sobre mí</h2>
+          <p>
+            Me gusta construir proyectos que no queden solo en teoría: interfaces,
+            juegos, validaciones, accesibilidad y organización de código.
+          </p>
         </div>
 
-        <aside class="panel panel--info">
-          <h3>Resumen de contacto</h3>
-          <ul class="info-list">
-            <li><span>Nombre</span><strong>Yerai Piera Langa</strong></li>
-            <li><span>Edad</span><strong>19 años</strong></li>
-            <li><span>Ubicación</span><strong>Valencia, España</strong></li>
-            <li><span>Estudios</span><strong>1º DAM · IES Simarro</strong></li>
-            <li><span>Enfoque</span><strong>Desarrollo web y aplicaciones</strong></li>
-            <li><span>Respuesta</span><strong>&lt; 48 h laborables</strong></li>
-          </ul>
+        <div class="cards">
+          <article class="card">
+            <h3>Perfil</h3>
+            <p>
+              Soy una persona constante, con ganas de aprender buenas prácticas y
+              mejorar cada versión de mis proyectos. Actualmente curso
+              <strong>1º DAM</strong> en el IES Simarro, Valencia.
+            </p>
+          </article>
 
-          <div class="contact-links">
-            <a class="link" href="mailto:yerpielan@alu.edu.gva.es"><span>Email</span><small>yerpielan@alu.edu.gva.es</small><span class="arrow" aria-hidden="true">→</span></a>
-            <a class="link" href="https://github.com/Yerai1206" target="_blank" rel="noopener noreferrer"><span>GitHub</span><small>github.com/Yerai1206</small><span class="arrow" aria-hidden="true">→</span></a>
-            <a class="link" href="https://www.linkedin.com/in/tu-usuario" target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><small>pendiente de enlace real</small><span class="arrow" aria-hidden="true">→</span></a>
-            <button class="link" type="button" data-open-chat><span>Asistente</span><small>resuelve dudas al momento</small><span class="arrow" aria-hidden="true">→</span></button>
-          </div>
-        </aside>
+          <article class="card">
+            <h3>Tecnologías</h3>
+            <p>
+              HTML, CSS, JavaScript, SVG, control de estado, almacenamiento local,
+              consumo de APIs, Git y GitHub.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Metodología</h3>
+            <p>
+              Diseño primero, implementación después. Reviso responsive, modo oscuro,
+              accesibilidad básica y que el contacto realmente funcione.
+            </p>
+          </article>
+        </div>
       </div>
+    </section>
+
+    <section id="formacion" class="section alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>Formación</h2>
+          <p>
+            Formación académica y aprendizaje aplicado a proyectos reales.
+          </p>
+        </div>
+
+        <div class="timeline">
+          <article class="timeline-item">
+            <h3>1º DAM · Desarrollo de Aplicaciones Multiplataforma</h3>
+            <p><strong>IES Simarro · Valencia</strong></p>
+            <p>
+              Programación, bases de datos, interfaces, lenguajes de marcas,
+              entornos de desarrollo y buenas prácticas de desarrollo.
+            </p>
+          </article>
+
+          <article class="timeline-item">
+            <h3>Bachillerato científico</h3>
+            <p><strong>IES Simarro · Valencia</strong></p>
+            <p>
+              Base en lógica, matemáticas, ciencias y resolución de problemas,
+              aplicada después al desarrollo de software.
+            </p>
+          </article>
+
+          <article class="timeline-item">
+            <h3>Autoaplicación</h3>
+            <p><strong>Proyectos propios</strong></p>
+            <p>
+              Portafolio web, ODM Runner, chatbot local, formulario con Web3Forms,
+              modo oscuro, scrollspy, responsive y optimización de interfaz.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="proyectos" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Proyectos</h2>
+          <p>
+            Proyectos propios donde aplico JavaScript, CSS, HTML, SVG, accesibilidad
+            y control de estado.
+          </p>
+        </div>
+
+        <div class="cards">
+          <article class="project-card">
+            <img src="runner.svg" alt="Logo personalizado del juego ODM Runner">
+            <div>
+              <h3>ODM Runner</h3>
+              <p>
+                Minijuego en canvas con scroll horizontal, equipo de maniobras,
+                raycasting, ataque, titanes, partículas, récord local y controles
+                con ratón, táctil y teclado.
+              </p>
+              <p>
+                <a class="btn primary" href="juego/juego.html">Abrir juego</a>
+              </p>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <img src="email.svg" alt="Logo personalizado de contacto">
+            <div>
+              <h3>Portafolio web</h3>
+              <p>
+                Web estática con formulario real, chatbot local, modo oscuro,
+                scrollspy, favicon, avatar SVG, imágenes personalizadas y estructura
+                organizada.
+              </p>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <img src="github.svg" alt="Logo personalizado de GitHub">
+            <div>
+              <h3>Chatbot del portafolio</h3>
+              <p>
+                Asistente sin API externa: responde sobre estudios, contacto,
+                proyectos y ODM Runner usando coincidencia por palabras clave.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto" class="section alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>Contacto</h2>
+          <p>
+            ¿Tienes una idea, una oferta de prácticas o quieres hablar sobre
+            <strong>ODM Runner</strong>? Escríbeme usando el formulario o el chat
+            desplegable.
+          </p>
+        </div>
+
+        <div class="contact-grid">
+          <article class="contact-card form-card">
+            <div id="contact-form-wrap">
+              <form id="contact-form" novalidate>
+                <input type="hidden" name="access_key" value="2a0f1853-afa5-4c6d-9309-bddaae2da455">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_subject" value="Nuevo mensaje desde el portafolio de Yerai">
+
+                <div class="field">
+                  <label for="name">Nombre</label>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    required
+                    minlength="2"
+                    autocomplete="name"
+                    placeholder="Tu nombre">
+                </div>
+
+                <div class="field">
+                  <label for="email">Correo</label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    autocomplete="email"
+                    placeholder="tu@correo.com">
+                </div>
+
+                <div class="field">
+                  <label for="message">Mensaje</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    required
+                    minlength="10"
+                    rows="5"
+                    placeholder="Cuéntame qué necesitas..."></textarea>
+                </div>
+
+                <div class="hp-field" aria-hidden="true">
+                  <label for="_honey">No rellenar</label>
+                  <input type="text" id="_honey" name="_honey" tabindex="-1" autocomplete="off">
+                </div>
+
+                <div class="form-actions">
+                  <button type="submit" class="btn primary">Enviar correo</button>
+                  <a
+                    id="mailto-fallback"
+                    class="btn secondary"
+                    href="mailto:yerpielan@alu.edu.gva.es?subject=Contacto%20portafolio&body=Hola%20Yerai,">
+                    Enviar por correo
+                  </a>
+                </div>
+
+                <p id="form-error" class="form-error" role="alert"></p>
+              </form>
+            </div>
+
+            <div id="form-success" class="success-card" hidden></div>
+          </article>
+
+          <aside class="contact-card info-card">
+            <div class="avatar-row">
+              <img
+                src="avatar.svg"
+                alt="Avatar personalizado de Yerai Piera Langa"
+                class="avatar-frame">
+
+              <div class="avatar-meta">
+                <p class="avatar-name">Yerai Piera Langa</p>
+                <p class="avatar-note">19 · Valencia · 1º DAM</p>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <img class="card-icon" src="email.svg" alt="Icono personalizado de correo">
+              <div>
+                <strong>Correo</strong>
+                <p>
+                  <a href="mailto:yerpielan@alu.edu.gva.es">
+                    yerpielan@alu.edu.gva.es
+                  </a>
+                </p>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <img class="card-icon" src="github.svg" alt="Icono personalizado de GitHub">
+              <div>
+                <strong>GitHub</strong>
+                <p>
+                  <a href="https://github.com/Yerai1206" target="_blank" rel="noopener noreferrer">
+                    github.com/Yerai1206
+                  </a>
+                </p>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <img class="card-icon" src="linkedin.svg" alt="Icono personalizado de LinkedIn">
+              <div>
+                <strong>LinkedIn</strong>
+                <p>
+                  <a href="https://www.linkedin.com/in/yerai-piera-langa" target="_blank" rel="noopener noreferrer">
+                    Perfil profesional
+                  </a>
+                </p>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <img class="card-icon" src="runner.svg" alt="Icono personalizado de ODM Runner">
+              <div>
+                <strong>ODM Runner</strong>
+                <p>
+                  Prueba el minijuego desde
+                  <a href="juego/juego.html">aquí</a>.
+                </p>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <div class="chat-dropdown">
+          <button
+            type="button"
+            class="chat-toggle"
+            id="chat-toggle"
+            aria-expanded="false"
+            aria-controls="chat-panel">
+
+            <span class="chat-toggle-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="5" y="7" width="14" height="10" rx="3" fill="#0ea5e9"/>
+                <circle cx="9" cy="12" r="1.3" fill="#ffffff"/>
+                <circle cx="15" cy="12" r="1.3" fill="#ffffff"/>
+                <path d="M12 4v3" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8 17v2M16 17v2" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </span>
+
+            <span class="chat-toggle-text">Abrir chat IA</span>
+          </button>
+
+          <section
+            class="chat-panel"
+            id="chat-panel"
+            role="region"
+            aria-labelledby="chat-toggle"
+            aria-hidden="true">
+
+            <header class="chat-header">
+              <div>
+                <h3>Chatbot del portafolio</h3>
+                <p class="muted">
+                  Preguntas rápidas sobre Yerai, estudios, contacto y ODM Runner.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                class="chat-close"
+                id="chat-close"
+                aria-label="Cerrar chat">
+                ×
+              </button>
+            </header>
+
+            <div id="chat-messages" class="chat-messages" aria-live="polite"></div>
+
+            <div class="chat-chips">
+              <button type="button" class="chat-chip" data-q="¿Qué es ODM Runner?">
+                ODM Runner
+              </button>
+
+              <button type="button" class="chat-chip" data-q="¿Dónde estudias?">
+                Formación
+              </button>
+
+              <button type="button" class="chat-chip" data-q="¿Cómo te contacto?">
+                Contacto
+              </button>
+
+              <button type="button" class="chat-chip" data-q="¿Tienes GitHub?">
+                GitHub
+              </button>
+            </div>
+
+            <form id="chat-form" class="chat-form">
+              <input
+                id="chat-input"
+                type="text"
+                autocomplete="off"
+                placeholder="Escribe una pregunta..."
+                aria-label="Mensaje al chat">
+
+              <button type="submit" class="btn primary">
+                Enviar
+              </button>
+            </form>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>
+        © <span id="year">2026</span> Yerai Piera Langa · Portafolio DAM · Valencia
+      </p>
+
+      <p>
+        <a href="https://github.com/Yerai1206" target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>
+        ·
+        <a href="mailto:yerpielan@alu.edu.gva.es">
+          Email
+        </a>
+        ·
+        <a href="juego/juego.html">
+          ODM Runner
+        </a>
+      </p>
     </div>
-  </section>
-</main>
+  </footer>
 
-<footer class="site-footer">
-  <div class="container footer-inner">
-    <p>© <span id="year"></span> Yerai Piera Langa · Valencia</p>
-    <a class="btn footer-game" href="juego/juego.html" aria-label="Abrir minijuego de Ataque a los Titanes">Minijuego AoT</a>
-    <p class="footer-note">HTML · CSS · JavaScript</p>
-  </div>
-</footer>
-
-<div class="chat-widget" id="chat-widget">
-  <section class="chat-panel" id="chat-panel" role="dialog" aria-modal="false" aria-labelledby="chat-title" aria-hidden="true">
-    <header class="chat-head">
-      <span class="chat-avatar" aria-hidden="true">
-        <svg viewBox="0 0 32 32" fill="none">
-          <rect x="7" y="10" width="18" height="14" rx="5" stroke="currentColor" stroke-width="2" />
-          <path d="M16 10V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-          <circle cx="16" cy="4.6" r="2" fill="currentColor" />
-          <circle cx="12.6" cy="16.5" r="1.7" fill="currentColor" />
-          <circle cx="19.4" cy="16.5" r="1.7" fill="currentColor" />
-          <path d="M13 20.4h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-          <path d="M4.5 15v4M27.5 15v4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-        </svg>
-      </span>
-      <div class="chat-title-wrap">
-        <h2 id="chat-title">Asistente del portafolio</h2>
-        <p class="chat-sub"><span class="chat-online" aria-hidden="true"></span> En línea · responde al momento</p>
-      </div>
-      <button type="button" class="chat-icon-btn" id="chat-clear" aria-label="Borrar conversación">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-          <path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14" />
-        </svg>
-      </button>
-      <button type="button" class="chat-icon-btn" id="chat-close" aria-label="Cerrar asistente">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-          <path d="M18 6 6 18M6 6l12 12" />
-        </svg>
-      </button>
-    </header>
-
-    <ol class="chat-log" id="chat-log" role="log" aria-live="polite" aria-relevant="additions"></ol>
-    <div class="chat-suggest" id="chat-suggest" role="group" aria-label="Sugerencias de preguntas"></div>
-
-    <form class="chat-form" id="chat-form" autocomplete="off">
-      <label class="sr-only" for="chat-input">Escribe tu pregunta</label>
-      <input id="chat-input" name="chat" type="text" placeholder="Pregunta sobre formación, proyectos, contacto…" maxlength="220" />
-      <button type="submit" class="chat-send" aria-label="Enviar pregunta">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M22 2 11 13" /><path d="M22 2 15 22l-4-9-9-4 20-7z" />
-        </svg>
-      </button>
-    </form>
-  </section>
-
-  <button type="button" class="chat-fab" id="chat-fab" aria-expanded="false" aria-controls="chat-panel" aria-label="Abrir asistente del portafolio">
-    <span class="chat-fab-robot" aria-hidden="true">
-      <svg viewBox="0 0 32 32" fill="none">
-        <path d="M16 5v3" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-        <circle cx="16" cy="4" r="1.8" fill="currentColor" />
-        <rect x="6.5" y="8" width="19" height="15" rx="5" fill="currentColor" opacity="0.16" />
-        <rect x="6.5" y="8" width="19" height="15" rx="5" stroke="currentColor" stroke-width="2" />
-        <circle cx="12.4" cy="15" r="1.9" fill="var(--ray)" />
-        <circle cx="19.6" cy="15" r="1.9" fill="var(--ray)" />
-        <path d="M12.6 19.2h6.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-        <path d="M3.5 13.5v4M28.5 13.5v4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-        <path d="M11 23.5v2.5h10v-2.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-      </svg>
-    </span>
-    <span class="chat-fab-label">Asistente</span>
-    <span class="chat-fab-badge" id="chat-badge" aria-hidden="true">1</span>
-  </button>
-</div>
-
-<div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
 </body>
 </html>
