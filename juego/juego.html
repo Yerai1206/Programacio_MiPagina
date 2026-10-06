@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Shingeki no Kyojin · Maniobras 3D · Yerai Piera Langa</title>
+  <meta name="description" content="Minijuego de Shingeki no Kyojin: balancéate con el equipo de maniobras tridimensional y esquiva a los titanes." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="juego.css" />
+</head>
+<body>
+  <header class="game-header">
+    <a href="../index.html" class="back-link">← Portafolio</a>
+    <h1 class="game-title"><span class="wings">⟪</span> MANIOBRAS 3D <span class="wings">⟫</span></h1>
+    <div class="head-btns">
+      <button class="icon-btn" id="helpBtn" title="Cómo jugar" aria-label="Cómo jugar">?</button>
+      <button class="icon-btn" id="muteBtn" title="Sonido" aria-label="Sonido">🔊</button>
+    </div>
+  </header>
+
+  <main class="game-stage" id="stage">
+    <canvas id="game" aria-label="Minijuego de Shingeki no Kyojin"></canvas>
+
+    <div class="hud" id="hud" aria-hidden="true" hidden>
+      <div class="hud-box"><span class="hud-label">Puntos</span><strong id="hScore">0</strong></div>
+      <div class="hud-box"><span class="hud-label">Distancia</span><strong id="hDist">0 m</strong></div>
+      <div class="hud-box"><span class="hud-label">Récord</span><strong id="hBest">0</strong></div>
+      <div class="hud-box"><span class="hud-label">Intensidad</span><strong id="hLv">Calma</strong></div>
+      <div class="hud-spacer"></div>
+      <div class="hud-box"><span class="hud-label">Hojas</span><strong id="hHp" class="blades"></strong></div>
+      <div class="hud-box"><span class="hud-label">Gas</span><div class="gas"><i id="hGas"></i></div></div>
+    </div>
+    <div class="combo" id="hCombo" hidden></div>
+
+    <!-- INTRO CINEMÁTICA -->
+    <section class="screen intro" id="intro">
+      <div class="i-sky"></div>
+      <div class="i-colossus"><div class="head"><i class="eye l"></i><i class="eye r"></i><i class="teeth"></i></div>
+        <b class="steam s1"></b><b class="steam s2"></b><b class="steam s3"></b></div>
+      <div class="i-wall"></div>
+      <div class="i-flash"></div>
+      <div class="i-title">
+        <p class="kanji">進撃の巨人</p>
+        <h2>SHINGEKI NO KYOJIN</h2>
+        <p class="i-sub">Maniobras Tridimensionales</p>
+      </div>
+      <button class="skip" id="skipIntro">Saltar ▸</button>
+    </section>
+
+    <!-- CÓMO JUGAR -->
+    <section class="screen howto" id="howto" hidden>
+      <div class="card wide">
+        <p class="eyebrow">Cuerpo de Exploración · Instrucciones</p>
+        <h2>Cómo jugar</h2>
+        <p class="lead">Avanza por Paradis balanceándote de tejado en tejado. El <b>Titán Acorazado</b> te persigue y <b>destruye las casas</b> a su paso: no te quedes atrás. Mantén pulsado para balancearte sin parar; suelta para lanzarte.</p>
+        <div class="grid">
+          <article><div class="ico"><svg viewBox="0 0 48 48"><rect x="14" y="5" width="20" height="30" rx="10" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M24 5v14M14 19h20" stroke="currentColor" stroke-width="2.5"/><rect x="14" y="5" width="10" height="14" rx="6" fill="currentColor" opacity=".7"/></svg></div>
+            <h3>Cable <kbd>Clic</kbd></h3><p>Mantén pulsado hacia donde apuntes: el gancho se clava en el tejado o en un objetivo aéreo. <b>Rueda del ratón</b> para alargar/recoger cable; al recogerlo te acercas mucho más rápido.</p></article>
+          <article><div class="ico"><svg viewBox="0 0 48 48"><path d="M6 30h36v8H6z" fill="none" stroke="currentColor" stroke-width="2.5" rx="3"/><path d="M24 4c8 8 8 16 0 22-8-6-8-14 0-22z" fill="currentColor" opacity=".7"/></svg></div>
+            <h3>Gas <kbd>Espacio</kbd></h3><p>Propulsión instantánea hacia el cursor. Las <b>botellas de gas</b> flotantes rellenan parte del depósito al recogerlas.</p></article>
+          <article><div class="ico"><svg viewBox="0 0 48 48"><circle cx="24" cy="12" r="8" fill="currentColor" opacity=".7"/><path d="M10 44V26l14-6 14 6v18" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M38 24 46 8" stroke="#ef4444" stroke-width="4" stroke-linecap="round"/></svg></div>
+            <h3>Titanes</h3><p>Los terrestres atacan con sus brazos. También hay <b>titanes voladores</b>: puedes engancharte a ellos y, con velocidad, cortarles para sumar una gran bonificación.</p></article>
+          <article><div class="ico"><svg viewBox="0 0 48 48"><path d="M24 6l5 12 13 1-10 9 3 13-11-7-11 7 3-13L6 19l13-1z" fill="currentColor" opacity=".8"/></svg></div>
+            <h3>Puntuación</h3><p>Suma por metro recorrido, multiplicada por tu <b>combo</b> (enganches seguidos sin tocar tejado ni suelo). Bonus por esquivar y cortar.</p></article>
+        </div>
+        <ul class="tips">
+          <li>🏚️ No te quedes en el suelo: los titanes te pillan.</li>
+          <li>🪽 Los edificios transparentes del fondo son atravesables: úsalos como puntos de anclaje sin preocuparte por las colisiones.</li>
+          <li>🧯 Las botellas azules recuperan gas; recógelas mientras te balanceas.</li>
+          <li>❤️ Tienes 3 hojas y recuperas una cada 600 m. Si el Acorazado te atrapa, te lanza hacia delante.</li>
+          <li><kbd>P</kbd> Pausa · <kbd>R</kbd> Reiniciar · <kbd>W</kbd>/<kbd>↑</kbd> cable en teclado</li>
+        </ul>
+        <button class="btn btn-primary" id="startBtn">⚔ Entrar al combate</button>
+      </div>
+    </section>
+
+    <section class="screen" id="paused" hidden>
+      <div class="card"><h2>Pausa</h2><p class="lead">Respira, soldado.</p>
+        <div class="actions"><button class="btn btn-primary" id="resumeBtn">Continuar</button><button class="btn btn-secondary" id="restart1">Reiniciar</button></div></div>
+    </section>
+
+    <section class="screen" id="over" hidden>
+      <div class="card">
+        <p class="eyebrow">Informe de misión</p>
+        <h2 id="oTitle">Has caído</h2>
+        <div class="big-score"><span>PUNTUACIÓN</span><strong id="oScore">0</strong></div>
+        <p class="badge-new" id="oNew" hidden>★ ¡Nuevo récord! ★</p>
+        <p class="rank" id="oRank"></p>
+        <div class="stats"><div><b id="oDist">0</b><span>metros</span></div><div><b id="oKills">0</b><span>titanes</span></div><div><b id="oDodge">0</b><span>esquives</span></div><div><b id="oCombo">0</b><span>mejor combo</span></div></div>
+        <ol class="top" id="oTop"></ol>
+        <div class="actions"><button class="btn btn-primary" id="restart2">Otra misión</button><button class="btn btn-secondary" id="helpBtn2">Controles</button><a class="btn btn-secondary" href="../index.html">Portafolio</a></div>
+      </div>
+    </section>
+
+    <div class="touch" id="touch"><button class="touch-btn" id="tBoost">GAS</button></div>
+  </main>
+  <script src="juego.js"></script>
+</body>
+</html>
