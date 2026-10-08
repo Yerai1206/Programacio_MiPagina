@@ -29,6 +29,7 @@
       <div class="hud-box"><span class="hud-label">Récord</span><strong id="hBest">0</strong></div>
       <div class="hud-box"><span class="hud-label">Intensidad</span><strong id="hLv">Calma</strong></div>
       <div class="hud-spacer"></div>
+      <div class="hud-box"><span class="hud-label">Lanzas</span><strong id="hSpears" class="blades"></strong></div>
       <div class="hud-box"><span class="hud-label">Hojas</span><strong id="hHp" class="blades"></strong></div>
       <div class="hud-box"><span class="hud-label">Gas</span><div class="gas"><i id="hGas"></i></div></div>
     </div>
@@ -54,24 +55,23 @@
       <div class="card wide">
         <p class="eyebrow">Cuerpo de Exploración · Instrucciones</p>
         <h2>Cómo jugar</h2>
-        <p class="lead">Avanza por Paradis balanceándote de tejado en tejado. El <b>Titán Acorazado</b> te persigue y <b>destruye las casas</b> a su paso: no te quedes atrás. Mantén pulsado para balancearte sin parar; suelta para lanzarte.</p>
+        <p class="lead">Avanza por Paradis balanceándote de tejado en tejado. El <b>Titán Acorazado</b> te persigue y <b>destruye las casas</b> a su paso. Usa tu arsenal para sobrevivir.</p>
         <div class="grid">
           <article><div class="ico"><svg viewBox="0 0 48 48"><rect x="14" y="5" width="20" height="30" rx="10" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M24 5v14M14 19h20" stroke="currentColor" stroke-width="2.5"/><rect x="14" y="5" width="10" height="14" rx="6" fill="currentColor" opacity=".7"/></svg></div>
-            <h3>Cable <kbd>Clic</kbd></h3><p>Mantén pulsado hacia donde apuntes: el gancho se clava en el tejado o en un objetivo aéreo. <b>Rueda del ratón</b> para alargar/recoger cable; al recogerlo te acercas mucho más rápido.</p></article>
+            <h3>Cable <kbd>Clic</kbd></h3><p>Mantén pulsado hacia donde apuntes. El gancho prioriza automáticamente la <b>nuca de los titanes</b> para un impulso masivo hacia ellos.</p></article>
           <article><div class="ico"><svg viewBox="0 0 48 48"><path d="M6 30h36v8H6z" fill="none" stroke="currentColor" stroke-width="2.5" rx="3"/><path d="M24 4c8 8 8 16 0 22-8-6-8-14 0-22z" fill="currentColor" opacity=".7"/></svg></div>
-            <h3>Gas <kbd>Espacio</kbd></h3><p>Propulsión instantánea hacia el cursor. Las <b>botellas de gas</b> flotantes rellenan parte del depósito al recogerlas.</p></article>
+            <h3>Gas <kbd>Espacio</kbd></h3><p>Propulsión instantánea hacia el cursor. Las <b>botellas azules</b> flotantes rellenan parte del depósito.</p></article>
           <article><div class="ico"><svg viewBox="0 0 48 48"><circle cx="24" cy="12" r="8" fill="currentColor" opacity=".7"/><path d="M10 44V26l14-6 14 6v18" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M38 24 46 8" stroke="#ef4444" stroke-width="4" stroke-linecap="round"/></svg></div>
-            <h3>Titanes</h3><p>Puedes <b>engancharte a la nuca de cualquier titán</b>: el cable te catapulta hacia ella y la cortas al llegar. Los terrestres atacan con sus brazos. También hay <b>titanes voladores</b>: puedes engancharte a ellos y, con velocidad, cortarles para sumar una gran bonificación.</p></article>
+            <h3>Arsenal</h3><p>Corta nucas con velocidad para obtener puntos. Usa <kbd>Q</kbd> para disparar <b>Lanzas Relámpago</b>: causan daño en área y su onda expansiva te impulsa.</p></article>
           <article><div class="ico"><svg viewBox="0 0 48 48"><path d="M24 6l5 12 13 1-10 9 3 13-11-7-11 7 3-13L6 19l13-1z" fill="currentColor" opacity=".8"/></svg></div>
-            <h3>Puntuación</h3><p>Suma por metro recorrido, multiplicada por tu <b>combo</b> (enganches seguidos sin tocar tejado ni suelo). Bonus por esquivar y cortar.</p></article>
+            <h3>Puntuación</h3><p>Suma por metro recorrido, multiplicada por tu <b>combo</b> (enganches seguidos sin tocar el suelo). Bonus masivo por cortes y explosiones.</p></article>
         </div>
         <ul class="tips">
           <li>🏚️ No te quedes en el suelo: los titanes te pillan.</li>
-          <li>🪽 Los edificios transparentes del fondo son atravesables: úsalos como puntos de anclaje sin preocuparte por las colisiones.</li>
-          <li>🧯 Las botellas azules recuperan gas; recógelas mientras te balanceas.</li>
-          <li>❤️ Tienes 3 hojas y recuperas una cada 600 m. Si el Acorazado te atrapa, te lanza hacia delante.</li>
-          <li><kbd>Shift</kbd>/<kbd>S</kbd> recoger cable · Suelta en plena subida diagonal para un <b>¡LANZAMIENTO!</b> con impulso extra.</li>
-          <li><kbd>P</kbd> Pausa · <kbd>R</kbd> Reiniciar · <kbd>W</kbd>/<kbd>↑</kbd> cable en teclado</li>
+          <li>🚀 <b>Mecánica nueva:</b> Dispara Lanzas Relámpago (Q) a tus pies para salir volando gracias al "rocket jump".</li>
+          <li>❤️ Tienes 3 hojas y 3 lanzas. Recuperas armamento progresivamente.</li>
+          <li><kbd>Shift</kbd>/<kbd>S</kbd> recoger cable · Suelta en plena subida diagonal para un <b>¡LANZAMIENTO!</b></li>
+          <li><kbd>P</kbd> Pausa · <kbd>R</kbd> Reiniciar · <kbd>Q</kbd> Lanza Relámpago</li>
         </ul>
         <button class="btn btn-primary" id="startBtn">⚔ Entrar al combate</button>
       </div>
