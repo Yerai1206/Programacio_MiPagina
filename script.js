@@ -12,10 +12,8 @@
     yearSpan.textContent = new Date().getFullYear();
   }
 
-  /* -----------------------------
-     1. Tema Claro / Oscuro
-  ------------------------------ */
-  const THEME_KEY = "portafolio-theme-yerai";
+  /* 1. Tema Claro / Oscuro */
+  const THEME_KEY = "portafolio-theme-estudiante";
   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
   const savedTheme = localStorage.getItem(THEME_KEY);
 
@@ -40,9 +38,7 @@
     updateThemeIcon();
   });
 
-  /* -----------------------------
-     2. Menú Móvil Responsive
-  ------------------------------ */
+  /* 2. Menú Móvil Responsive */
   function closeNav() {
     if (!nav || !menuToggle) return;
     nav.classList.remove("open");
@@ -66,9 +62,7 @@
     link.addEventListener("click", closeNav);
   });
 
-  /* -----------------------------
-     3. Scroll Suave y Scrollspy
-  ------------------------------ */
+  /* 3. Scroll Suave y Scrollspy */
   function scrollToId(hash) {
     const target = document.querySelector(hash);
     if (!target) return;
@@ -88,45 +82,7 @@
     });
   });
 
-  const navLinks = Array.from(document.querySelectorAll('.nav-list a[href^="#"]'));
-  const sections = navLinks
-    .map((link) => document.querySelector(link.getAttribute("href")))
-    .filter(Boolean);
-
-  let ticking = false;
-
-  function updateActiveSection() {
-    if (!sections.length) return;
-    const offset = (siteHeader?.offsetHeight || 72) + 30;
-    let current = sections[0];
-
-    for (const section of sections) {
-      if (section.getBoundingClientRect().top <= offset) {
-        current = section;
-      }
-    }
-
-    const activeLink = navLinks.find((link) => link.getAttribute("href") === `#${current.id}`);
-    if (activeLink) {
-      navLinks.forEach((l) => l.classList.toggle("active", l === activeLink));
-    }
-  }
-
-  window.addEventListener("scroll", () => {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        updateActiveSection();
-        ticking = false;
-      });
-      ticking = true;
-    }
-  }, { passive: true });
-
-  updateActiveSection();
-
-  /* -----------------------------
-     4. Buscador y Filtro de Proyectos
-  ------------------------------ */
+  /* 4. Buscador y Filtro de Proyectos */
   const projectSearch = document.getElementById("projectSearch");
   const filterBtns = document.querySelectorAll(".filter-btn");
   const projectCards = document.querySelectorAll("#projectsGrid .project-card");
@@ -164,14 +120,28 @@
     filterProjects();
   });
 
-  /* -----------------------------
-     5. Estimador / Calculadora
-  ------------------------------ */
+  /* Toggle del Case Study de AOT */
+  const toggleAotBtn = document.getElementById("toggleAotBtn");
+  const caseStudy = document.getElementById("caseStudy");
+  
+  if (toggleAotBtn && caseStudy) {
+    toggleAotBtn.addEventListener("click", () => {
+      caseStudy.classList.toggle("hidden");
+      if (caseStudy.classList.contains("hidden")) {
+        toggleAotBtn.textContent = "Ver análisis técnico";
+      } else {
+        toggleAotBtn.textContent = "Ocultar análisis";
+        // Scroll suave al aparecer
+        caseStudy.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+    });
+  }
+
+  /* 5. Estimador / Calculadora Ajustado */
   const projectTypeSelect = document.getElementById("projectType");
+  const pageCountSelect = document.getElementById("pageCount");
   const featFormCheck = document.getElementById("featForm");
   const featDarkCheck = document.getElementById("featDark");
-  const featDbCheck = document.getElementById("featDb");
-  const urgencySelect = document.getElementById("urgency");
 
   const resHours = document.getElementById("resHours");
   const resComplexity = document.getElementById("resComplexity");
@@ -181,46 +151,41 @@
   function calculateEstimate() {
     if (!projectTypeSelect) return;
 
-    let baseHours = 15;
-    let complexity = "Media";
-    let techList = ["HTML5", "CSS3", "JavaScript"];
+    let baseHours = 10;
+    let complexity = "Baja";
+    let techList = ["HTML", "CSS"];
 
     const type = projectTypeSelect.value;
     if (type === "landing") {
-      baseHours = 12;
-      complexity = "Baja - Media";
-    } else if (type === "corporate") {
-      baseHours = 25;
-      complexity = "Media";
-      techList.push("Web3Forms API");
-    } else if (type === "canvas") {
-      baseHours = 35;
-      complexity = "Alta";
-      techList.push("Canvas 2D", "Algoritmos / Física");
-    } else if (type === "java") {
+      baseHours = 15;
+      complexity = "Baja";
+    } else if (type === "dinamico") {
       baseHours = 30;
-      complexity = "Media - Alta";
-      techList = ["Java", "SQL", "JDBC", "Eclipse/VSCode"];
+      complexity = "Media";
+      techList.push("PHP", "SQL");
+    } else if (type === "canvas") {
+      baseHours = 40;
+      complexity = "Alta";
+      techList = ["HTML", "CSS", "JavaScript Vanilla"];
     }
 
-    if (featFormCheck?.checked && !techList.includes("Web3Forms API")) {
+    const pages = pageCountSelect.value;
+    if (pages === "medium") {
+      baseHours += 10;
+    } else if (pages === "large") {
+      baseHours += 20;
+      complexity = type === "landing" ? "Media" : "Alta";
+    }
+
+    if (featFormCheck?.checked) {
       baseHours += 3;
-      techList.push("Web3Forms API");
+      if (!techList.includes("JS")) techList.push("JS/API");
     }
     if (featDarkCheck?.checked) {
       baseHours += 2;
     }
-    if (featDbCheck?.checked && !techList.includes("SQL")) {
-      baseHours += 10;
-      techList.push("Base de Datos / SQL");
-      complexity = "Alta";
-    }
 
-    if (urgencySelect?.value === "express") {
-      baseHours = Math.round(baseHours * 0.9);
-    }
-
-    const minH = Math.max(10, baseHours - 3);
+    const minH = Math.max(10, baseHours - 5);
     const maxH = baseHours + 5;
 
     if (resHours) resHours.textContent = `${minH} - ${maxH} horas`;
@@ -228,61 +193,46 @@
     if (resTech) resTech.textContent = techList.join(", ");
   }
 
-  [projectTypeSelect, featFormCheck, featDarkCheck, featDbCheck, urgencySelect].forEach((el) => {
+  [projectTypeSelect, pageCountSelect, featFormCheck, featDarkCheck].forEach((el) => {
     el?.addEventListener("change", calculateEstimate);
   });
 
   calculateEstimate();
 
   btnApplyCalc?.addEventListener("click", () => {
-    const contactForm = document.getElementById("contactForm");
     const subjectInput = document.getElementById("subject_input");
     const messageInput = document.getElementById("message");
 
     if (subjectInput && projectTypeSelect) {
       const selectedTypeLabel = projectTypeSelect.options[projectTypeSelect.selectedIndex].text;
-      subjectInput.value = `Consulta: ${selectedTypeLabel}`;
+      subjectInput.value = `Práctica: ${selectedTypeLabel}`;
     }
 
     if (messageInput && resHours && resTech) {
-      messageInput.value = `Hola Yerai, he utilizado el estimador de tu web para un proyecto tipo "${projectTypeSelect.options[projectTypeSelect.selectedIndex].text}".
-
+      messageInput.value = `Hola Yerai, me gustaría que hablásemos sobre una práctica tipo "${projectTypeSelect.options[projectTypeSelect.selectedIndex].text}".
 Estimación calculada: ${resHours.textContent}.
-Tecnologías previas: ${resTech.textContent}.
-
-Me gustaría recibir más información.`;
+Tecnologías: ${resTech.textContent}.`;
     }
 
     scrollToId("#contacto");
   });
 
-  /* -----------------------------
-     6. Formulario Web3Forms & Autoresponder
-  ------------------------------ */
+  /* 6. Formulario Web3Forms & Autoresponder */
   const form = document.getElementById("contactForm");
   const formStatus = document.getElementById("formStatus");
   const submitBtn = document.getElementById("submitBtn");
-  const copyEmailBtn = document.getElementById("copyEmail");
   const replytoInput = document.getElementById("replytoInput");
-  const userEmail = "yerpielan@alu.edu.gva.es";
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   function setFieldError(input, message) {
     const field = input.closest(".field");
     if (!field) return;
     const error = field.querySelector(".field-error");
     if (error) error.textContent = message || "";
-    input.classList.toggle("invalid", Boolean(message));
-    input.setAttribute("aria-invalid", message ? "true" : "false");
   }
 
   function clearFormErrors() {
     if (!form) return;
     form.querySelectorAll(".field-error").forEach((error) => (error.textContent = ""));
-    form.querySelectorAll(".invalid").forEach((input) => {
-      input.classList.remove("invalid");
-      input.setAttribute("aria-invalid", "false");
-    });
   }
 
   function showStatus(type, text) {
@@ -291,61 +241,15 @@ Me gustaría recibir más información.`;
     formStatus.className = `form-status ${type}`;
   }
 
-  function validateForm() {
-    if (!form) return false;
-    let ok = true;
-
-    const name = form.elements["name"];
-    const emailInput = form.elements["email"];
-    const message = form.elements["message"];
-    const consent = form.elements["consent"];
-
-    if (name.value.trim().length < 2) {
-      setFieldError(name, "Por favor, escribe tu nombre.");
-      ok = false;
-    } else {
-      setFieldError(name, "");
-    }
-
-    if (!emailRegex.test(emailInput.value.trim())) {
-      setFieldError(emailInput, "Introduce una dirección de correo válida.");
-      ok = false;
-    } else {
-      setFieldError(emailInput, "");
-    }
-
-    if (message.value.trim().length < 10) {
-      setFieldError(message, "El mensaje debe tener al menos 10 caracteres.");
-      ok = false;
-    } else {
-      setFieldError(message, "");
-    }
-
-    if (!consent.checked) {
-      setFieldError(consent, "Debes aceptar el consentimiento para responderte.");
-      ok = false;
-    } else {
-      setFieldError(consent, "");
-    }
-
-    return ok;
-  }
-
   form?.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (!form) return;
 
     const honey = form.elements["_honey"];
-    if (honey && honey.value) return; // Spam prevention
+    if (honey && honey.value) return; 
 
     clearFormErrors();
 
-    if (!validateForm()) {
-      showStatus("error", "Por favor, revisa los campos señalados.");
-      return;
-    }
-
-    // Configurar replyto dinámico para el correo de autorespuesta
     const emailInput = form.elements["email"];
     if (replytoInput && emailInput) {
       replytoInput.value = emailInput.value.trim();
@@ -353,7 +257,7 @@ Me gustaría recibir más información.`;
 
     const originalText = submitBtn.textContent;
     submitBtn.disabled = true;
-    submitBtn.textContent = "Enviando mensaje...";
+    submitBtn.textContent = "Enviando...";
 
     try {
       const response = await fetch(form.action, {
@@ -361,39 +265,19 @@ Me gustaría recibir más información.`;
         body: new FormData(form),
         headers: { Accept: "application/json" }
       });
-
       const data = await response.json();
-
-      if (!response.ok || !data.success) {
-        throw new Error(data?.message || "Ocurrió un problema con el envío.");
-      }
-
+      if (!response.ok || !data.success) throw new Error(data?.message);
       form.reset();
-      clearFormErrors();
-      showStatus("success", "✅ Mensaje enviado con éxito. Te hemos enviado un correo de confirmación automático.");
+      showStatus("success", "✅ Mensaje enviado de prueba. Recibirás respuesta automática.");
     } catch (error) {
-      showStatus("error", `❌ ${error?.message || "No se pudo enviar."} Puedes escribirme directamente a ${userEmail}`);
+      showStatus("error", `❌ Ocurrió un error. Escríbeme directamente.`);
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = originalText;
     }
   });
 
-  copyEmailBtn?.addEventListener("click", async () => {
-    try {
-      await navigator.clipboard.writeText(userEmail);
-      copyEmailBtn.textContent = "¡Correo copiado! ✓";
-      setTimeout(() => {
-        copyEmailBtn.textContent = "Copiar correo";
-      }, 2000);
-    } catch (err) {
-      showStatus("info", `Correo: ${userEmail}`);
-    }
-  });
-
-  /* -----------------------------
-     7. Asistente Virtual / Chatbot
-  ------------------------------ */
+  /* 7. Asistente Virtual / Chatbot Básico */
   const chatForm = document.getElementById("chatForm");
   const chatInput = document.getElementById("chatInput");
   const chatLog = document.getElementById("chatLog");
@@ -403,55 +287,40 @@ Me gustaría recibir más información.`;
     if (!chatLog) return;
     const msg = document.createElement("div");
     msg.className = `chat-msg ${sender}`;
-    if (isHtml) {
-      msg.innerHTML = text;
-    } else {
-      msg.textContent = text;
-    }
+    if (isHtml) msg.innerHTML = text;
+    else msg.textContent = text;
     chatLog.appendChild(msg);
     chatLog.scrollTop = chatLog.scrollHeight;
   }
 
   function getLocalResponse(query) {
     const q = query.toLowerCase();
-
-    if (q.includes("quien") || q.includes("yerai") || q.includes("presentacion")) {
-      return "Soy <b>Yerai Piera Langa</b>, estudiante de 19 años de 1º DAM en el IES Simarro (Valencia). Apasionado de la programación web, Java y el desarrollo funcional.";
+    if (q.includes("estudio") || q.includes("dam") || q.includes("curso")) {
+      return "Estudio 1º de Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM) en el IES Simarro.";
     }
-    if (q.includes("estudio") || q.includes("dam") || q.includes("simarro")) {
-      return "Estudio 1º de Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM) en el IES Simarro en Xàtiva (Valencia).";
+    if (q.includes("juego") || q.includes("aot")) {
+      return "El <b>Juego de Aot</b> es una práctica hecha con HTML5 Canvas y JS nativo. Se puede jugar desde la sección proyectos.";
     }
-    if (q.includes("juego") || q.includes("aot") || q.includes("tit")) {
-      return "El <b>Juego de Aot</b> es un desarrollo propio en HTML5 Canvas con física de maniobras tridimensionales, raycasting y modo Poder de Titán. Puedes probarlo desde el botón de la web.";
+    if (q.includes("formulario") || q.includes("contact")) {
+      return "El formulario usa la API gratuita de Web3Forms y tiene un sistema de respuesta automática.";
     }
-    if (q.includes("correo") || q.includes("contact") || q.includes("web3forms")) {
-      return "El correo de contacto principal es <b>yerpielan@alu.edu.gva.es</b>. El formulario utiliza Web3Forms con confirmación por correo automática al remitente.";
-    }
-    if (q.includes("proyectos") || q.includes("java") || q.includes("habilidades")) {
-      return "En la sección de proyectos encontrarás el Juego de Aot, el Portafolio web y sistemas en Java con bases de datos SQL.";
-    }
-
-    return "Puedo darte información sobre los proyectos de Yerai, sus estudios en DAM, el Juego de Aot o el formulario de contacto.";
+    return "Hola, soy un bot básico configurado para mi práctica. Pregunta sobre 'estudios', 'juego aot' o 'formulario'.";
   }
 
   if (chatForm && chatInput) {
-    addChat("¡Hola! Soy el asistente virtual del portafolio. ¿En qué te puedo ayudar hoy?", "bot");
+    addChat("¡Hola! Soy el asistente automático del portafolio. ¿En qué te ayudo?", "bot");
 
     chatForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const text = chatInput.value.trim();
       if (!text) return;
-
       addChat(text, "user");
       chatInput.value = "";
-
       if (chatStatus) chatStatus.textContent = "Escribiendo...";
-
       setTimeout(() => {
         if (chatStatus) chatStatus.textContent = "";
-        const reply = getLocalResponse(text);
-        addChat(reply, "bot", true);
-      }, 400);
+        addChat(getLocalResponse(text), "bot", true);
+      }, 500);
     });
 
     document.querySelectorAll(".chip[data-question]").forEach((chip) => {
@@ -461,37 +330,4 @@ Me gustaría recibir más información.`;
       });
     });
   }
-
-  /* -----------------------------
-     8. Reproductor de Música Lateral
-  ------------------------------ */
-  const musicDock = document.getElementById("musicDock");
-  const musicToggle = document.getElementById("musicToggle");
-  const musicClose = document.getElementById("musicClose");
-  const spotifyFrame = document.getElementById("spotifyFrame");
-
-  function openMusic() {
-    if (!musicDock) return;
-    musicDock.classList.add("open");
-    musicToggle?.setAttribute("aria-expanded", "true");
-    if (spotifyFrame && !spotifyFrame.src) {
-      spotifyFrame.src = spotifyFrame.dataset.src || "";
-    }
-  }
-
-  function closeMusic() {
-    if (!musicDock) return;
-    musicDock.classList.remove("open");
-    musicToggle?.setAttribute("aria-expanded", "false");
-  }
-
-  musicToggle?.addEventListener("click", () => {
-    if (musicDock.classList.contains("open")) {
-      closeMusic();
-    } else {
-      openMusic();
-    }
-  });
-
-  musicClose?.addEventListener("click", closeMusic);
 })();
