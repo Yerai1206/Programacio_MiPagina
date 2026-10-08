@@ -125,6 +125,7 @@
   updateActiveSection();
 
   /* -----------------------------
+<<<<<<< HEAD
      4. Buscador y Filtro de Proyectos
   ------------------------------ */
   const projectSearch = document.getElementById("projectSearch");
@@ -138,6 +139,21 @@
     projectCards.forEach((card) => {
       const categories = (card.dataset.category || "").toLowerCase();
       const text = card.textContent.toLowerCase();
+=======
+     Música: botón flotante + mini panel
+  ------------------------------ */
+  const musicToggle = document.getElementById("musicToggle");
+  const musicPanel = document.getElementById("musicPanel");
+  const musicClose = document.getElementById("musicClose");
+  const spotifyFrame = document.getElementById("spotifyFrame");
+
+  function openMusic() {
+    if (!musicPanel) return;
+
+    musicPanel.classList.add("open");
+    musicPanel.setAttribute("aria-hidden", "false");
+    musicToggle?.setAttribute("aria-expanded", "true");
+>>>>>>> 2046202 (clase jueves)
 
       const matchesCategory = currentCategory === "all" || categories.includes(currentCategory);
       const matchesSearch = !currentSearchQuery || text.includes(currentSearchQuery);
@@ -150,6 +166,7 @@
     });
   }
 
+<<<<<<< HEAD
   filterBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
       filterBtns.forEach((b) => b.classList.remove("active"));
@@ -157,6 +174,24 @@
       currentCategory = btn.dataset.filter.toLowerCase();
       filterProjects();
     });
+=======
+  function closeMusic() {
+    if (!musicPanel) return;
+
+    musicPanel.classList.remove("open");
+    musicPanel.setAttribute("aria-hidden", "true");
+    musicToggle?.setAttribute("aria-expanded", "false");
+  }
+
+  musicToggle?.addEventListener("click", () => {
+    if (!musicPanel) return;
+
+    if (musicPanel.classList.contains("open")) {
+      closeMusic();
+    } else {
+      openMusic();
+    }
+>>>>>>> 2046202 (clase jueves)
   });
 
   projectSearch?.addEventListener("input", (e) => {
@@ -399,7 +434,14 @@ Me gustaría recibir más información.`;
   const chatLog = document.getElementById("chatLog");
   const chatStatus = document.getElementById("chatStatus");
 
+<<<<<<< HEAD
   function addChat(text, sender, isHtml = false) {
+=======
+  const GAME_ANSWER =
+    "El <b>Juego de Aot</b> es un minijuego propio de scroll horizontal. Está disponible en <a href='juego/juego.html'>Juego de Aot</a>.";
+
+  function addChat(text, sender, allowHtml = false) {
+>>>>>>> 2046202 (clase jueves)
     if (!chatLog) return;
     const msg = document.createElement("div");
     msg.className = `chat-msg ${sender}`;
@@ -431,11 +473,84 @@ Me gustaría recibir más información.`;
       return "En la sección de proyectos encontrarás el Juego de Aot, el Portafolio web y sistemas en Java con bases de datos SQL.";
     }
 
+<<<<<<< HEAD
     return "Puedo darte información sobre los proyectos de Yerai, sus estudios en DAM, el Juego de Aot o el formulario de contacto.";
   }
 
   if (chatForm && chatInput) {
     addChat("¡Hola! Soy el asistente virtual del portafolio. ¿En qué te puedo ayudar hoy?", "bot");
+=======
+    if (/(contacto|correo|email|escribir|linkedin|github)/.test(text)) {
+      return 'Puedes escribirme a <a href="mailto:yerpielan@alu.edu.gva.es">yerpielan@alu.edu.gva.es</a>, desde el formulario o en GitHub: <a href="https://github.com/Yerai1206" target="_blank" rel="noopener noreferrer">Yerai1206</a>.';
+    }
+
+    if (/(estudio|estudias|dam|bachiller|ies|simarro|formacion)/.test(text)) {
+      return "Estudio <b>1º DAM</b> en el <b>IES Simarro</b> (Valencia) y tengo base de <b>Bachillerato científico</b>.";
+    }
+
+    if (/(quien|nombre|yerai|presentacion|sobre)/.test(text)) {
+      return "Soy <b>Yerai Piera Langa</b>, estudiante de 19 años en Valencia.";
+    }
+
+    if (/(proyecto|portafolio|web|trabajo)/.test(text)) {
+      return "En <b>Proyectos</b> tienes el portafolio, el Juego de Aot y las prácticas del ciclo.";
+    }
+
+    if (/(musica|spotify|playlist|sonido)/.test(text)) {
+      return 'La música está en el botón flotante de abajo a la derecha. La playlist es <a href="https://open.spotify.com/playlist/6j9HwV5BiTi9bpxqOSHcFC" target="_blank" rel="noopener noreferrer">esta</a>.';
+    }
+
+    return "Puedo ayudarte con estudios, proyectos o contacto.";
+  }
+
+  async function askChat(question) {
+    const context =
+      "Eres el asistente del portafolio de Yerai Piera Langa. " +
+      "Responde breve, profesional y en español. " +
+      "Datos reales: Yerai tiene 19 años, vive en Valencia, estudia 1º DAM en el IES Simarro " +
+      "y tiene base de Bachillerato científico. Correo yerpielan@alu.edu.gva.es, GitHub Yerai1206, " +
+      "LinkedIn pendiente. Proyecto destacado: el propio portafolio. " +
+      "No inventes datos que no estén aquí.";
+
+    const prompt =
+      `${context}\n\n` +
+      `Pregunta: ${question}\n` +
+      "Instrucción: no inventes información. Si no sabes algo, di que puede preguntar por estudios, proyectos o contacto.";
+
+    const url = `https://text.pollinations.ai/${encodeURIComponent(prompt)}?model=openai&referrer=portafolio-yerai`;
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 12000);
+
+    try {
+      const response = await fetch(url, {
+        signal: controller.signal
+      });
+
+      clearTimeout(timeout);
+
+      if (!response.ok) {
+        throw new Error("bad-response");
+      }
+
+      const text = (await response.text()).trim();
+
+      if (!text) {
+        throw new Error("empty");
+      }
+
+      return text;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  if (chatForm && chatInput) {
+    addChat(
+      "Hola. Pregúntame por estudios, proyectos o contacto.",
+      "bot"
+    );
+>>>>>>> 2046202 (clase jueves)
 
     chatForm.addEventListener("submit", (e) => {
       e.preventDefault();
