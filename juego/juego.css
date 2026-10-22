@@ -73,3 +73,12 @@ kbd{font:700 12px 'Rajdhani';background:#222831;border:1px solid #4a5361;border-
 @media (prefers-reduced-motion:reduce){.intro{animation:none}}
 
 .hud-box{border-radius:6px}.card{border-radius:8px}.hud-box strong#hLv{font-size:18px;color:var(--gold)}
+
+/* Añade esto a juego.css */
+.game-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  background: #000;
+  filter: contrast(1.1) saturate(1.1) sepia(0.1); /* Tinte anime oscuro */
+}

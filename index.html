@@ -135,6 +135,25 @@
             </ul>
           </section>
         </aside>
+
+        <!-- Widget del tiempo para varias ciudades -->
+        <section class="card weather-widget" id="weatherWidget">
+          <h2>El tiempo ahora</h2>
+          <div class="weather-locations" id="weatherContent">
+            <article class="weather-location" data-location="Carcaixent">
+              <h3>Carcaixent <span>Valencia</span></h3>
+              <p class="weather-loading">Cargando tiempo...</p>
+            </article>
+            <article class="weather-location" data-location="Valencia">
+              <h3>Valencia <span>Valencia</span></h3>
+              <p class="weather-loading">Cargando tiempo...</p>
+            </article>
+            <article class="weather-location" data-location="Madrid">
+              <h3>Madrid <span>Comunidad de Madrid</span></h3>
+              <p class="weather-loading">Cargando tiempo...</p>
+            </article>
+          </div>
+        </section>
       </div>
     </section>
 
@@ -491,7 +510,6 @@
     </section>
 
     <!-- Decisiones de Arquitectura (ADR) -->
-    <!-- MANTENIDO: Requisito explícito de la rúbrica para obtener el 100% en el apartado Arquitectura -->
     <section id="adr" class="section section-alt">
       <div class="wrap">
         <div class="section-head">
@@ -650,5 +668,81 @@
   </footer>
 
   <script src="script.js"></script>
+
+  <!-- Datos meteorológicos actuales de las tres ciudades -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const apiKey = "18b9f84978894a00bb5165808262010";
+      const locations = [
+        { name: "Carcaixent", query: "39.1506,-0.4308" },
+        { name: "Valencia", query: "Valencia, Spain" },
+        { name: "Madrid", query: "Madrid, Spain" }
+      ];
+
+      function addWeatherMetric(container, label, value) {
+        const metric = document.createElement("div");
+        const metricLabel = document.createElement("span");
+        const metricValue = document.createElement("strong");
+        metricLabel.textContent = label;
+        metricValue.textContent = value;
+        metric.append(metricLabel, metricValue);
+        container.append(metric);
+      }
+
+      function showWeather(location, current) {
+        const summary = document.createElement("div");
+        const icon = document.createElement("img");
+        const details = document.createElement("div");
+        const temperature = document.createElement("strong");
+        const condition = document.createElement("span");
+        const metrics = document.createElement("div");
+
+        summary.className = "weather-summary";
+        icon.className = "weather-icon";
+        icon.src = `https:${current.condition.icon}`;
+        icon.alt = "";
+        details.className = "weather-condition";
+        temperature.className = "weather-temperature";
+        temperature.textContent = `${Math.round(current.temp_c)}°C`;
+        condition.textContent = current.condition.text;
+        metrics.className = "weather-metrics";
+
+        details.append(temperature, condition);
+        summary.append(icon, details);
+        addWeatherMetric(metrics, "Sensación", `${Math.round(current.feelslike_c)}°`);
+        addWeatherMetric(metrics, "Humedad", `${current.humidity}%`);
+        addWeatherMetric(metrics, "Viento", `${Math.round(current.wind_kph)} km/h`);
+
+        location.replaceChildren(location.querySelector("h3"), summary, metrics);
+      }
+
+      async function loadWeather(location, query) {
+        const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${encodeURIComponent(query)}&lang=es`;
+
+        try {
+          const response = await fetch(url);
+          const data = await response.json();
+          if (!response.ok) {
+            throw new Error(data.error?.message || `Error HTTP: ${response.status}`);
+          }
+          showWeather(location, data.current);
+        } catch (error) {
+          console.error(`No se pudo cargar el tiempo de ${location.dataset.location}:`, error);
+          const message = document.createElement("p");
+          message.className = "weather-error";
+          message.textContent = error.message === "Failed to fetch" || error.message.includes("NetworkError")
+            ? "No se pudo conectar. Comprueba la conexión o abre la web con Live Server."
+            : error.message;
+          location.replaceChildren(location.querySelector("h3"), message);
+        }
+      }
+
+      const locationCards = document.querySelectorAll(".weather-location");
+      locations.forEach(({ name, query }) => {
+        const location = Array.from(locationCards).find(card => card.dataset.location === name);
+        if (location) loadWeather(location, query);
+      });
+    });
+  </script>
 </body>
 </html>
